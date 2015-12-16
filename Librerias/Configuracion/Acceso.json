@@ -1,0 +1,49 @@
+{
+	"Predeterminado" : {
+		"informacion" : {
+			"descripcion" : "lorem ipsum",
+			"creacion" : "2015-05-05 10:00:00",
+			"modificacion" : "2015-05-05 10:00:00"
+		},
+		"fuente" : {
+			"directorio" : "Predeterminado",
+			"publico" : true
+		},
+		"localhost" : {
+			"habilitado" : true,
+			"ip" : [ "::1", "127.0.0.1" ]
+		},
+		"sistema" : {
+			"estructura" : {
+				"Desarrollo" : true,
+				"Produccion" : true
+			},
+			"src" : {
+				"permiso" : "755"
+			},
+			"tiempo" : {
+				"zona" : "America/Bogota"
+			}
+		},
+		"criptografia" : {
+			"hashBinario" : true,
+			"compresion" : {
+				"habilitado" : false,
+				"nivelCompresion" : 8
+			},
+			"RIJNDAEL": "dd7a7ca37ee36fbcb3c298d6fd430586",
+			"BLOWFISH": "b4bd5ec81b10853f1a37bd4cfecb504da08adaf3"
+		},
+		"twig" : {
+			"codificacion": "UTF-8",
+			"debug" : {
+				"Desarrollo" : false,
+				"Produccion" : false
+			},
+			"cache": {
+				"Desarrollo" : false,
+				"Produccion" : false
+			}
+		}
+	}
+}

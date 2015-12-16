@@ -1,0 +1,25 @@
+{
+	"configuracion" : {
+		"memcached" : false
+	},
+	"driver" : {
+		"memcached" : {
+			"nombreServidor" : "Nombre del Servidor",
+			"servidor" : "localhost",
+			"puerto" : 11211,
+			"usuario" : false,
+			"clave" : false,
+			"expiracion" : 1800
+		}
+	},
+	"reservado" : {
+		"doctrine" : {
+			"habilitado" : false,
+			"driver" : "memcached"
+		},
+		"neuralAutocargador" : {
+			"habilitado" : false,
+			"driver" : "opcache"
+		}
+	}
+}

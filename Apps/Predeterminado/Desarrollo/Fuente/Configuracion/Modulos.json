@@ -1,0 +1,12 @@
+{
+	"configuracion" : {
+		"habilitado" : true
+	},
+	"modulos" : {
+		"Index" : {
+			"habilitado" : true,
+			"mantenimiento" : false,
+			"descripcion" : "Login de la aplicacion"
+		}
+	}
+}

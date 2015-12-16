@@ -1,0 +1,8 @@
+{
+	"aplicacion" : "Predeterminado",
+	"ruta" : "protegido",
+	"plantilla" : {
+		"Desarrollo" : "Desarrollo.zyos.html",
+		"Produccion" : "Produccion.zyos.html"
+	}
+}

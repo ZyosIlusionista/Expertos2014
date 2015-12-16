@@ -1,0 +1,19 @@
+{
+	"Predeterminado" : {
+		"PHPMail" : false,
+		"Desarrollo" : {
+			"host" : "smtp.gmail.com",
+			"port" : 465,
+			"encryption" : "ssl",
+			"username" : "correo@gmail.com",
+			"password" : "password"
+		},
+		"Produccion" : {
+			"host" : "smtp.gmail.com",
+			"port" : 465,
+			"encryption" : "ssl",
+			"username" : "correo@gmail.com",
+			"password" : "password"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"configuracion" : {
+		"habilitado" : false
+	},
+	"modulos" : {
+		"Index" : {
+			"habilitado" : true,
+			"mantenimiento" : false,
+			"descripcion" : "descripcion del modulo"
+		}
+	}
+}

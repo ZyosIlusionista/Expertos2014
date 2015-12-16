@@ -1,0 +1,38 @@
+{
+	"Predeterminado" : {
+		"Desarrollo" : {
+			"dbname" : "nombre base de datos",
+			"user" : "usuario",
+			"password" : "password",
+			"host" : "localhost",
+			"driver" : "pdo_mysql",
+			"charset" : "utf8"
+		},
+		"Produccion" : {
+			"dbname" : "nombre base de datos",
+			"user" : "usuario",
+			"password" : "password",
+			"host" : "localhost",
+			"driver" : "pdo_mysql",
+			"charset" : "utf8"
+		}
+	},
+	"Expertos" : {
+		"Desarrollo" : {
+			"dbname" : "expertos",
+			"user" : "expertos",
+			"password" : "1234567890",
+			"host" : "localhost",
+			"driver" : "pdo_mysql",
+			"charset" : "utf8"
+		},
+		"Produccion" : {
+			"dbname" : "expertos",
+			"user" : "expertos",
+			"password" : "1234567890",
+			"host" : "localhost",
+			"driver" : "pdo_mysql",
+			"charset" : "utf8"
+		}
+	}
+}

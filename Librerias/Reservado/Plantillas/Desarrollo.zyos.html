@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<title>.:: Excepción Encontrada ::.</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="shortcut icon" href="{{ RUTA_RESERVADO|e }}/img/favicon.ico" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,900,700">
+		<link rel="stylesheet" href="{{ RUTA_RESERVADO|e }}/css/bootstrap.css">
+		<link rel="stylesheet" href="{{ RUTA_RESERVADO|e }}/css/font-awesome.css">
+		<link rel="stylesheet" id="type-stylesheet" href="{{ RUTA_RESERVADO|e }}/css/goliath.css">
+		<link rel="stylesheet" href="{{ RUTA_RESERVADO|e }}/css/goliath-tablet.css">
+		<link rel="stylesheet" href="{{ RUTA_RESERVADO|e }}/css/goliath-phone.css">
+		
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:900,100,300,400">
+		<script src="{{ RUTA_RESERVADO|e }}/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	</head>
+	
+	<body class="preload">
+		
+		<div class="container trending">
+			<div class="title-default">
+				<a href="#" class="active">Excepción</a>
+			</div>
+			<div class="items-wrapper">
+				<ul id="newsticker" class="items newsticker">
+					<li class="item hot">
+						<i class="tag-default">Mensaje</i>{{ MENSAJE|e }}
+						<span class="legend-default"><i class="fa fa-clock-o"></i>{{ "now"|date("Y-m-d") }}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Homepage content -->
+		<div class="container homepage-content" style="margin-top: 20px;">
+			
+			<div class="main-content-column-2">
+				
+				<!-- Post -->
+				<div class="post-1 no-image no-stars no-share">
+										
+					<div class="title"><h2 id="intro"><a href="#">Error - Excepción</a></h2></div>
+					
+					
+					<div class="post">
+						<h3>Información</h3>
+						
+						<div class="info-box warning">
+							<p class="heading">Código: {{ CODIGO|e }}</p>
+							<p>{{ MENSAJE|e }}</p>
+						</div>
+						
+								
+						
+						
+						<div class="widget-tabs tab-shortcode" style="margin-top: 35px;">
+							<div class="title-default">
+								<a href="#" class="active">Adicional</a>
+								<a href="#">URL Mod_Re-Write</a>
+							</div>
+							<div class="items">
+								<div class="tab-content">
+									<ul class="minus">
+										<li>Linea del Error: {{ LINEA|e }}</li>
+										<li style="word-wrap: break-word;">Archivo del Error: {{ ARCHIVO|e }}</li>
+									</ul>
+								</div>
+								<div class="tab-content">
+									<pre>
+{{ URL|print_r|e }}
+									</pre>
+								</div>
+							</div>
+					
+						</div>
+						
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		
+		
+		<!-- Copyright -->
+		<div class="container copyright">
+			<div class="left">
+				® {{ "now"|date("Y") }} <a href="http://neuralframework.com" target="_blank">NeuralPHP Framework</a>
+			</div>
+			<div class="right">
+				<ul>
+					<li>
+						<a href="https://twitter.com/NeuralFramework" target="_blank"><i class="fa fa-twitter-square"></i></a>
+						<a href="https://www.facebook.com/NeuralFramework" target="_blank"><i class="fa fa-facebook-square"></i></a>
+						<a href="https://www.youtube.com/user/NeuralFramework" target="_blank"><i class="fa fa-youtube-square"></i></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+		
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery-1.11.1.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/bootstrap.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/bootstrap-hover-dropdown.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.particleground.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.cycle2.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.cycle2.scrollVert.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.cycle2.swipe.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.hoverintent.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.inview.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.ui.core.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.ui.effect.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.ui.effect-size.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/jquery.ui.effect-slide.min.js"></script>
+		<script src="{{ RUTA_RESERVADO|e }}/js/goliath.js"></script>
+	</body>
+</html>
