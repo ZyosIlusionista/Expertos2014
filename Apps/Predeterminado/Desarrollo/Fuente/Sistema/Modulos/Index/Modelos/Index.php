@@ -30,6 +30,7 @@
 	 */
 	namespace Modelo\Modulo\Index;
 	use \Neural\Excepcion;
+	use \Neural\BD\Conexion;
 	
 	/**
 	 * Modelo Index
@@ -42,16 +43,22 @@
 	 */
 	class Index {
 		
+		private $entidad = false;
+		
+		function __construct() {
+			$conexion = new Conexion(APPBD, APP);
+			$this->entidad = $conexion->doctrineORM();
+		}
+		
 		/**
-		 * Index::consultaSQL()
+		 * Index::consultaUsuario()
 		 * 
-		 * Los metodos pueden ser invocados por el controlador
-		 * sin importar su nombre pero solo con la visualizacion
-		 * publica que se requiere
+		 * Genera la consulta de los datos del usuario
 		 * 
-		 * @return void
+		 * @param array $array
+		 * @return object
 		 */
-		public function consultaSQL() {
-			return 'Se carga el Modulo Index, controlador Index y Metodo Index';
+		public function consultaUsuario($array = false) {
+			return $this->entidad->getRepository('\Entidades\Expertos\Usuarios')->findOneBy($array);
 		}
 	}

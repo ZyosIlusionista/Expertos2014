@@ -111,9 +111,13 @@
 		 */
 		private function autenticacionValidacion() {
 			if($this->validarFormulario->validar('\Formularios\Login\Login') == true):
-				throw new Excepcion(json_encode($this->validarFormulario->mensajeError()), 2, APP, 'LoginMensajes');
+				$this->autenticacionProcesar();
 			else:
-				throw new Excepcion(json_encode($this->validarFormulario->mensajeError()), 2, APP, 'LoginMensajes');
+				throw new Excepcion(implode("\n", $this->validarFormulario->mensajeError()), 2, APP, 'LoginMensajes');
 			endif;
+		}
+		
+		private function autenticacionProcesar() {
+			print_r($this->modelo->consultaUsuario($this->validarFormulario->datosFormulario()));
 		}
 	}

@@ -12,12 +12,19 @@
 				type : "POST",
 				cache : false,
 				error : function(error_mensaje) {
-					alert(error_mensaje);
-					console.log(error_mensaje.responseText);
+					swal("Error!", "Se ha presentado un error, validar con el administrador del sistema", "error");
 				},
 				success : function(resultado) {
-					alert(resultado);
+					login.success(resultado);
 				}
 			});
+		},
+		success : function(info) {
+			if(info.status == true) {
+				location.href = info.data;
+			}
+			else {
+				swal("Error!", info.data, "error");
+			}
 		}
 	});

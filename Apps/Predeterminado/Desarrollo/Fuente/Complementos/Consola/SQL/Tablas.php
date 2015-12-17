@@ -40,14 +40,27 @@
 			print_r("\n\n");
 			print_r(implode("\n\n", $queries));
 			print_r("\n\n");
-			/*
-			$conn->insert('ESTADOS', array('NOMBRE' => 'ACTIVO'));
-			$conn->insert('ESTADOS', array('NOMBRE' => 'INACTIVO'));
-			$conn->insert('ESTADOS', array('NOMBRE' => 'PENDIENTE'));
-			$conn->insert('ESTADOS', array('NOMBRE' => 'FINALIZADO'));
-			$conn->insert('ESTADOS', array('NOMBRE' => 'GUARDADO'));
-			$conn->insert('ESTADOS', array('NOMBRE' => 'ELIMINADO'));
-			*/
+			
+			
+			foreach ($queries as $sql):
+				$this->conexion->executeQuery($sql);
+			endforeach;
+			
+			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'ACTIVO'));
+			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'INACTIVO'));
+			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'PENDIENTE'));
+			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'FINALIZADO'));
+			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'GUARDADO'));
+			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'ELIMINADO'));
+			
+			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 1, 'NOMBRE' => 'CENTRAL', 'ESTADO' => 1));
+			$this->conexion->insert('PERMISOS_ACCESO', array('ID' => 1, 'NOMBRE' => 'ACCESO TOTAL', 'LECTURA' => 1, 'ESCRITURA' => 1, 'ACTUALIZAR' => 1, 'ELIMINAR' => 1));
+			$this->conexion->insert('PERMISOS', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR', 'ESTADO' => 1));
+			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 1, 'PERMISO' => 1, 'MODULO' => 1, 'ACCESO' => 1));
+			
+			$this->conexion->insert('USUARIOS_EMPRESA', array('ID' => 1, 'NOMBRE' => 'CLARO'));
+			$this->conexion->insert('USUARIOS_CARGO', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR DEL SISTEMA'));
+			$this->conexion->insert('USUARIOS', array('ID' => 1, 'USUARIO' => 'ADMIN', 'PASSWORD' => sha1('123'), 'NOMBRE' => 'ADMINISTRADOR', 'APELLIDO' => 'DEL SISTEMA', 'USUARIO_RR' => 'ADMINRR', 'CORREO' => 'ADMIN@ADMIN.COM', 'ESTADO' => 1, 'EMPRESA' => 1, 'CARGO' => 1));
 			
 		}
 		
@@ -143,7 +156,7 @@
 				'comment' => 'ID del Estado del Permiso [ID de la tabla ESTADOS]'
 			));
 			$this->permisos->setPrimaryKey(array('ID'));
-			$this->permisos->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'));
+			$this->permisos->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
 		}
 		
 		/**
@@ -156,7 +169,7 @@
 		 * @return void
 		 */
 		private function tbl_permisos_modulos() {
-			$this->permisos_modulo = $this->esquema->createTable('PEMISOS_MODULOS');
+			$this->permisos_modulo = $this->esquema->createTable('PERMISOS_MODULOS');
 			$this->permisos_modulo->addColumn('ID', 'bigint', array(
 				'notnull' => true,
 				'autoincrement' => true, 
@@ -174,7 +187,7 @@
 				'comment' => 'ID del Estado del Modulo [ID de la tabla ESTADOS]'
 			));
 			$this->permisos_modulo->setPrimaryKey(array('ID'));
-			$this->permisos_modulo->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'));
+			$this->permisos_modulo->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
 		}
 		
 		/**
@@ -330,8 +343,8 @@
 				'comment' => 'ID del Permiso del Permiso Acceso [ID de la tabla PERMISOS_ACCESO]'
 			));
 			$this->permisos_seleccion->setPrimaryKey(array('ID'));
-			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'));
-			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_modulo, array('MODULO'), array('ID'));
-			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_acceso, array('ACCESO'), array('ID'));
+			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_modulo, array('MODULO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_acceso, array('ACCESO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
 		}
 	}
