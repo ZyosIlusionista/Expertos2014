@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Usuarios
  *
- * @Table(name="USUARIOS", indexes={@Index(name="IDX_C8C51BBED6A52665", columns={"ESTADO"}), @Index(name="IDX_C8C51BBE8792A44A", columns={"EMPRESA"}), @Index(name="IDX_C8C51BBECCBA95C1", columns={"CARGO"})})
+ * @Table(name="USUARIOS", indexes={@Index(name="IDX_C8C51BBED6A52665", columns={"ESTADO"}), @Index(name="IDX_C8C51BBE8792A44A", columns={"EMPRESA"}), @Index(name="IDX_C8C51BBECCBA95C1", columns={"CARGO"}), @Index(name="IDX_C8C51BBEC23F5584", columns={"PERMISO"})})
  * @Entity
  */
 class Usuarios
@@ -64,13 +64,6 @@ class Usuarios
     private $correo;
 
     /**
-     * @var integer
-     *
-     * @Column(name="PERMISO", type="bigint", nullable=false)
-     */
-    private $permiso;
-
-    /**
      * @var \Entidades\Expertos\UsuariosEmpresa
      *
      * @ManyToOne(targetEntity="Entidades\Expertos\UsuariosEmpresa")
@@ -79,6 +72,16 @@ class Usuarios
      * })
      */
     private $empresa;
+
+    /**
+     * @var \Entidades\Expertos\Permisos
+     *
+     * @ManyToOne(targetEntity="Entidades\Expertos\Permisos")
+     * @JoinColumns({
+     *   @JoinColumn(name="PERMISO", referencedColumnName="ID")
+     * })
+     */
+    private $permiso;
 
     /**
      * @var \Entidades\Expertos\UsuariosCargo
@@ -256,30 +259,6 @@ class Usuarios
     }
 
     /**
-     * Set permiso
-     *
-     * @param integer $permiso
-     *
-     * @return Usuarios
-     */
-    public function setPermiso($permiso)
-    {
-        $this->permiso = $permiso;
-
-        return $this;
-    }
-
-    /**
-     * Get permiso
-     *
-     * @return integer
-     */
-    public function getPermiso()
-    {
-        return $this->permiso;
-    }
-
-    /**
      * Set empresa
      *
      * @param \Entidades\Expertos\UsuariosEmpresa $empresa
@@ -301,6 +280,30 @@ class Usuarios
     public function getEmpresa()
     {
         return $this->empresa;
+    }
+
+    /**
+     * Set permiso
+     *
+     * @param \Entidades\Expertos\Permisos $permiso
+     *
+     * @return Usuarios
+     */
+    public function setPermiso(\Entidades\Expertos\Permisos $permiso = null)
+    {
+        $this->permiso = $permiso;
+
+        return $this;
+    }
+
+    /**
+     * Get permiso
+     *
+     * @return \Entidades\Expertos\Permisos
+     */
+    public function getPermiso()
+    {
+        return $this->permiso;
     }
 
     /**

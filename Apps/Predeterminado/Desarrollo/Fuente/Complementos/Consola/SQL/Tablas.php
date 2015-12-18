@@ -53,14 +53,18 @@
 			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'GUARDADO'));
 			$this->conexion->insert('ESTADOS', array('NOMBRE' => 'ELIMINADO'));
 			
-			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 1, 'NOMBRE' => 'CENTRAL', 'ESTADO' => 1));
+			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 1, 'NOMBRE' => 'Central', 'ESTADO' => 1));
+			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 2, 'NOMBRE' => 'Usuarios', 'ESTADO' => 1));
+			
 			$this->conexion->insert('PERMISOS_ACCESO', array('ID' => 1, 'NOMBRE' => 'ACCESO TOTAL', 'LECTURA' => 1, 'ESCRITURA' => 1, 'ACTUALIZAR' => 1, 'ELIMINAR' => 1));
+			
 			$this->conexion->insert('PERMISOS', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR', 'ESTADO' => 1));
 			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 1, 'PERMISO' => 1, 'MODULO' => 1, 'ACCESO' => 1));
+			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 2, 'PERMISO' => 1, 'MODULO' => 2, 'ACCESO' => 1));
 			
 			$this->conexion->insert('USUARIOS_EMPRESA', array('ID' => 1, 'NOMBRE' => 'CLARO'));
 			$this->conexion->insert('USUARIOS_CARGO', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR DEL SISTEMA'));
-			$this->conexion->insert('USUARIOS', array('ID' => 1, 'USUARIO' => 'ADMIN', 'PASSWORD' => sha1('123'), 'NOMBRE' => 'ADMINISTRADOR', 'APELLIDO' => 'DEL SISTEMA', 'USUARIO_RR' => 'ADMINRR', 'CORREO' => 'ADMIN@ADMIN.COM', 'ESTADO' => 1, 'EMPRESA' => 1, 'CARGO' => 1));
+			$this->conexion->insert('USUARIOS', array('ID' => 1, 'USUARIO' => 'ADMIN', 'PASSWORD' => sha1('123'), 'NOMBRE' => 'ADMINISTRADOR', 'APELLIDO' => 'DEL SISTEMA', 'USUARIO_RR' => 'ADMINRR', 'CORREO' => 'ADMIN@ADMIN.COM', 'ESTADO' => 1, 'EMPRESA' => 1, 'CARGO' => 1, 'PERMISO' => 1));
 			
 		}
 		
@@ -264,6 +268,7 @@
 			$this->usuarios->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
 			$this->usuarios->addForeignKeyConstraint($this->usuarios_empresa, array('EMPRESA'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
 			$this->usuarios->addForeignKeyConstraint($this->usuarios_cargo, array('CARGO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->usuarios->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
 		}
 		
 		/**

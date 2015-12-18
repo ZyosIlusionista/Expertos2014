@@ -61,4 +61,15 @@
 		public function consultaUsuario($array = false) {
 			return $this->entidad->getRepository('\Entidades\Expertos\Usuarios')->findOneBy($array);
 		}
+		
+		/**
+		 * Index::consultarPermisos()
+		 * 
+		 * Genera la consulta de los permisos indicados
+		 * @param integer $permiso
+		 * @return object
+		 */
+		public function consultarPermisos($permiso = false) {
+			return $this->entidad->getRepository('\Entidades\Expertos\PermisosSeleccion')->findBy(array('permiso' => $permiso));
+		}
 	}

@@ -1,1 +1,1 @@
-{"status" : {{ CODIGO == 0 ? "true" : "false" }}, "data" : "{{ MENSAJE|e }}"}
+{"status" : false, "data" : "{{ MENSAJE|e }}"}

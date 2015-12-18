@@ -2,6 +2,7 @@
 	"predeterminado" : [ "Excepciones", "Predeterminado.html" ],
 	"asignado" : {
 		"mantenimiento" : [ "Excepciones", "Predeterminado.html" ],
-		"LoginMensajes" : [ "Excepciones", "Login", "ErrorValidacion.json" ]
+		"LoginMensajes" : [ "Excepciones", "Login", "ErrorValidacion.json" ],
+		"NoPermisos" : [ "Excepciones", "NoPermisos.html" ]
 	}
 }

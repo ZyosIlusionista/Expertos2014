@@ -32,6 +32,7 @@
 	use \Mvc\Controlador;
 	use \Neural\Excepcion;
 	use \Neural\JQuery\ValidarForm;
+	use \Neural\Sesion\SesionPHP;
 	
 	/**
 	 * Controlador Index
@@ -46,6 +47,28 @@
 	 * controlador
 	 */
 	class Index extends Controlador {
+		
+		private $sesionPHP = false;
+		private $sesionNombre = false;
+		
+		/**
+		 * Index::__construct()
+		 * 
+		 * Genera el proceso de las variables necesarias 
+		 * para el procedimiento de login
+		 * 
+		 * @return void
+		 */
+		function __construct() {
+			parent::__construct();
+			$this->sesionNombre = hash('crc32b', APP);
+			$this->sesionPHP = new SesionPHP(APP);
+			
+			if($this->sesionPHP->obtenerExistencia(APP) == true):
+				$this->cabecera->redireccion($this->ruta->modulo('Central'));
+				exit();
+			endif;
+		}
 		
 		/**
 		 * Index::Index()
@@ -117,7 +140,112 @@
 			endif;
 		}
 		
+		/**
+		 * Index::autenticacionProcesar()
+		 * 
+		 * Genera la validacion de la existencia del usuario
+		 * y obtiene el objeto correspondiente de la consulta
+		 * 
+		 * @return string
+		 */
 		private function autenticacionProcesar() {
-			print_r($this->modelo->consultaUsuario($this->validarFormulario->datosFormulario()));
+			$consulta = $this->modelo->consultaUsuario($this->validarFormulario->datosFormulario());
+			if(count($consulta) == 1):
+				$this->usuarioEstado($consulta);
+			else:
+				throw new Excepcion('El usuario y/o contraseña incorrectos', 3, APP, 'LoginMensajes');
+			endif;
+		}
+		
+		/**
+		 * Index::usuarioEstado()
+		 * 
+		 * Genera la validación del estado del usuario
+		 * y se encuentra el objeto que implementa la
+		 * consulta de datos
+		 * 
+		 * @param object $objeto
+		 * @return string
+		 */
+		private function usuarioEstado($objeto = false) {
+			if($objeto->getEstado()->getId() == 1):
+				$this->usuarioPermisoEstado($objeto);
+			else:
+				throw new Excepcion('Se ha presentado un error con el proceso de inicio de sesión', 4, APP, 'LoginMensajes');
+			endif;
+		}
+		
+		/**
+		 * Index::usuarioPermisoEstado()
+		 * 
+		 * Validacion del estado del permiso correspondiente
+		 * @param object $objeto
+		 * @return string
+		 */
+		private function usuarioPermisoEstado($objeto = false) {
+			if($objeto->getPermiso()->getEstado()->getId() == 1):
+				$this->usuarioProcesar($objeto);
+			else:
+				throw new Excepcion('Se ha presentado un error validar con el administrador del sistema', 5, APP, 'LoginMensajes');
+			endif;
+		}
+		
+		/**
+		 * Index::usuarioProcesar()
+		 * 
+		 * Genera el proceso de inicio de sesion en el
+		 * servidor correspondiente
+		 * 
+		 * @param object $objeto
+		 * @return string
+		 */
+		private function usuarioProcesar($objeto = false) {
+			$fecha = strtotime(ate("Y-m-d H:i:s"));
+			$informacion = array(
+				'info' => array(
+					'nombre' => $objeto->getNombre(),
+					'apellido' => $objeto->getApellido(),
+					'correo' => $objeto->getCorreo(),
+					'as400' => $objeto->getUsuarioRr(),
+					'empresa' => $objeto->getEmpresa()->getNombre(),
+					'cargo' => $objeto->getCargo()->getNombre()
+				),
+				'validacion' => array(
+					'llave' => hash('snefru', implode('_', array($objeto->getNombre(), $objeto->getApellido(), $fecha))),
+					'fecha' => date("Y-m-d"),
+					'secuencia' => $fecha
+				),
+				'permisos' => $this->usuarioPermisosOrg($objeto->getPermiso()->getId())
+			);
+			$this->sesionPHP->asignar($this->sesionNombre, $informacion);
+			
+			$this->cabecera->header('json');
+			echo json_encode(array('status' => (boolean) true, 'data' => $this->ruta->modulo('Central')));
+		}
+		
+		/**
+		 * Index::usuarioPermisosOrg()
+		 * 
+		 * Genera la organizacion correspondiente
+		 * de los permisos relacionados
+		 * 
+		 * @param integer $permiso
+		 * @return array
+		 */
+		private function usuarioPermisosOrg($permiso = false) {
+			$object = $this->modelo->consultarPermisos($permiso);
+			$lista = array();
+			
+			foreach ($object AS $info):
+				if($info->getModulo()->getEstado()->getId() == 1):
+					$lista[$info->getModulo()->getNombre()] = array(
+						'lectura' => $info->getAcceso()->getLectura(),
+						'escritura' => $info->getAcceso()->getEscritura(),
+						'actualizar' => $info->getAcceso()->getActualizar(),
+						'eliminar' => $info->getAcceso()->getEliminar()
+					);
+				endif;
+			endforeach;
+			return $lista;
 		}
 	}
