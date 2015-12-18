@@ -5,7 +5,7 @@
 	use \Neural\Excepcion;
 	use \Neural\Sesion\SesionPHP;
 	
-	class logOut extends Controlador {
+	class LogOut extends Controlador {
 		
 		private $sesionPHP = false;
 		

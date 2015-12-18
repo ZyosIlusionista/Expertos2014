@@ -13,7 +13,14 @@
 			$this->sesionPHP = new Sesion();
 		}
 		
+		/**
+		 * 
+		 * Se genera la prueba correspondiente del comentario
+		 * para el proceso de permisos
+		 * 
+		 * @permiso lectura
+		 */
 		public function Index() {
-			echo 'Cargando Modulo Central Controlador Index';
+			var_dump($this->sesionPHP->obtenerInfo());
 		}
 	}
