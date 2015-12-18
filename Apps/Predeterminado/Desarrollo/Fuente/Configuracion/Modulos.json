@@ -7,6 +7,11 @@
 			"habilitado" : true,
 			"mantenimiento" : false,
 			"descripcion" : "Login de la aplicacion"
+		},
+		"Central" : {
+			"habilitado" : true,
+			"mantenimiento" : false,
+			"descripcion" : "Modulo inicial donde llegaran los usuarios"
 		}
 	}
 }

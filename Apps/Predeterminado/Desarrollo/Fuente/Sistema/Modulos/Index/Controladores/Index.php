@@ -70,6 +70,7 @@
 			endif;
 		}
 		
+		
 		/**
 		 * Index::Index()
 		 * 
@@ -200,7 +201,7 @@
 		 * @return string
 		 */
 		private function usuarioProcesar($objeto = false) {
-			$fecha = strtotime(ate("Y-m-d H:i:s"));
+			$fecha = strtotime(date("Y-m-d H:i:s"));
 			$informacion = array(
 				'info' => array(
 					'nombre' => $objeto->getNombre(),
@@ -218,7 +219,6 @@
 				'permisos' => $this->usuarioPermisosOrg($objeto->getPermiso()->getId())
 			);
 			$this->sesionPHP->asignar($this->sesionNombre, $informacion);
-			
 			$this->cabecera->header('json');
 			echo json_encode(array('status' => (boolean) true, 'data' => $this->ruta->modulo('Central')));
 		}
