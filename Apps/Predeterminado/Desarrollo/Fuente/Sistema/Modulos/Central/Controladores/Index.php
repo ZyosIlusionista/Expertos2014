@@ -10,6 +10,7 @@
 		private $sesionPHP = false;
 		
 		function __construct() {
+			parent::__construct();
 			$this->sesionPHP = new Sesion();
 		}
 		
@@ -21,6 +22,7 @@
 		 * @permiso lectura
 		 */
 		public function Index() {
-			var_dump($this->sesionPHP->obtenerInfo());
+			$this->plantilla->parametroGlobal('sesion', $this->sesionPHP->obtenerInfo());
+			echo $this->plantilla->mostrarPlantilla('Base.html');
 		}
 	}

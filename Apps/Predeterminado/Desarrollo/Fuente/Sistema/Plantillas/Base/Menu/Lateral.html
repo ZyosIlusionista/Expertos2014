@@ -1,0 +1,100 @@
+{#
+	/**
+	 * Menu Lateral - Principal
+	 *
+	 * Muestra le menu principal el cual se le generara
+	 * las diferentes variables de los permisos correspondientes
+	 * al class <ul id="main-menu" class="main-menu">
+	 *
+	 * @nota: add class "multiple-expanded" to allow multiple submenus to open
+	 * @nota: class "auto-inherit-active-class" will automatically add "active"
+	 * class for parent elements who are marked already with class "active"
+	 */
+#}
+
+	<ul id="main-menu" class="main-menu">
+	
+	{#
+		/**
+		 * Modulo Central
+		 *
+		 * El modulo inicial de carga de todos 
+		 * los usuarios el cual siempre debe 
+		 * ser de lectura para su ingreso
+		 */
+	#}
+	
+	{% if sesion.permisos.Central.lectura == 1 %}
+		
+		<li>
+			<a href="{{ RUTA_APP|e }}/Central">
+				<i class="entypo-monitor"></i>
+				<span class="title">Inicio</span>
+			</a>
+		</li>
+		
+	{% endif %}
+	
+{# ----------------------------------------------------------------------- #}
+	
+	{#
+		/**
+		 * Modulo Usuarios
+		 *
+		 * El modulo en el cual puede listar, agregar
+		 * eliminar y/o actualizar los usuarios
+		 * registrados en la aplicacion
+		 */
+	#}
+	
+	{% if sesion.permisos.Usuarios.lectura == 1 %}
+		
+		<li>
+			<a href="javascript:;">
+				<i class="entypo-users"></i>
+				<span class="title">Usuarios</span>
+			</a>
+			<ul>
+				{# muestra el listado de usuarios registrados en la aplicacion #}
+				<li>
+					<a href="{{ RUTA_APP|e }}/Usuarios">
+						<i class="entypo-list"></i>
+						<span class="title">Listado</span>
+					</a>
+				</li>
+				
+				{% if sesion.permisos.Usuarios.escritura == 1 %}
+					
+					<li>
+						<a href="{{ RUTA_APP|e }}/Usuarios/nuevo">
+							<i class="entypo-user"></i>
+							<span class="title">Nuevo Usuario</span>
+						</a>
+					</li>
+					
+				{% endif %}
+				
+			</ul>
+		</li>
+		
+	{% endif %}
+	
+{# ----------------------------------------------------------------------- #}
+	
+	{#
+		/**
+		 * Controlador MVC LogOut - Cerrar Sesion
+		 *
+		 * Genera el cierre de la sesion correspondiente
+		 * no se maneja permisos sobre este ya que 
+		 * es el comun para todos los usuarios
+		 */
+	#}	
+		<li>
+			<a href="{{ RUTA_APP|e }}/LogOut">
+				<i class="entypo-logout"></i>
+				<span class="title">Cerrar Sesión</span>
+			</a>
+		</li>
+		
+	</ul>

@@ -1,0 +1,39 @@
+	{% extends 'Base.html' %}
+	
+	{% block contenido %}
+		<h1>Listado de Usuarios</h1>
+		
+		
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered responsive">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>AS400</th>
+							<th>Empresa</th>
+							<th>Cargo</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if consulta|length >= 1 %}
+							
+							{% for info in consulta %}
+								<tr>
+									<td>{{ info.getApellido|e }} - {{ info.getNombre|e }}</td>
+									<td>{{ info.getUsuarioRr|e }}</td>
+									<td>{{ info.getEmpresa.getNombre|e }}</td>
+									<td>{{ info.getCargo.getNombre|e }}</td>
+								</tr>
+							{% endfor %}
+							
+						{% else %}
+						
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+	{% endblock %}

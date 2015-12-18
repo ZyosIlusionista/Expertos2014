@@ -12,6 +12,11 @@
 			"habilitado" : true,
 			"mantenimiento" : false,
 			"descripcion" : "Modulo inicial donde llegaran los usuarios"
+		},
+		"Usuarios" : {
+			"habilitado" : true,
+			"mantenimiento" : false,
+			"descripcion" : "Modulo de administración de usuarios"
 		}
 	}
 }

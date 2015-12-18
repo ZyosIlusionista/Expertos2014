@@ -1,0 +1,64 @@
+{#
+	/**
+	 * Imagen del Logo
+	 *
+	 * Esta es la imagen del menu izquierdo de la aplicacion
+	 * donde se muestra en la parte superior, esta imagen
+	 * tiene un hipervinculo el cual redirecciona al modulo
+	 * central
+	 */
+#}
+	
+	<div class="logo">
+		<a href="{{ RUTA_APP|e }}/Central">
+			<img src="{{ RUTA_PUBLICO|e }}/assets/images/logo@2x.png" width="120" alt="" />
+		</a>
+	</div>
+
+{# FIN DE IMAGEN DEL LOGO #}
+
+{#
+	/**
+	 * Boton Mostrar / Ocultar Menu
+	 *
+	 * Esta es la imagen del menu izquierdo de la aplicacion
+	 * donde se muestra en la parte superior, esta imagen
+	 * tiene el proceso de mostrar y ocultar el menu.
+	 *
+	 * se puede agregar al class class="sidebar-collapse-icon"
+	 * las propiedades adicionales como la animacion
+	 *
+	 * @param with-animation: agrega animacion al mostrar y 
+	 * contraer el menu correspondiente
+	 */
+#}
+
+	<div class="sidebar-collapse">
+		<a href="#" class="sidebar-collapse-icon">
+			<i class="entypo-menu"></i>
+		</a>
+	</div>
+
+{# FIN DE BOTON MOSTRAR / OCULTAR MENU #}
+
+{#
+	/**
+	 * Boton Dispositivos Moviles
+	 *
+	 * Esta es la imagen del menu izquierdo de la aplicacion
+	 * donde se muestra en la parte superior, esta imagen
+	 * tiene el proceso de mostrar y ocultar el menu.
+	 *
+	 * NO RETIRAR - CAMBIAR - ELIMINAR
+	 * Es necesaria para que se muestre el menu en dispositivos
+	 * moviles
+	 */
+#}
+
+	<div class="sidebar-mobile-menu visible-xs">
+		<a href="#" class="with-animation">
+			<i class="entypo-menu"></i>
+		</a>
+	</div>
+
+{# FIN DE BOTON DISPOSITIVOS MOVILES #}
