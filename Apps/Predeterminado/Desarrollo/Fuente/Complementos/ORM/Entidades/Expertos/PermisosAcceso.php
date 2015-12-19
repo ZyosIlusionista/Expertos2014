@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PermisosAcceso
  *
- * @Table(name="PERMISOS_ACCESO")
+ * @Table(name="permisos_acceso")
  * @Entity
  */
 class PermisosAcceso
@@ -77,7 +77,7 @@ class PermisosAcceso
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+    
         return $this;
     }
 
@@ -101,7 +101,7 @@ class PermisosAcceso
     public function setLectura($lectura)
     {
         $this->lectura = $lectura;
-
+    
         return $this;
     }
 
@@ -125,7 +125,7 @@ class PermisosAcceso
     public function setEscritura($escritura)
     {
         $this->escritura = $escritura;
-
+    
         return $this;
     }
 
@@ -149,7 +149,7 @@ class PermisosAcceso
     public function setActualizar($actualizar)
     {
         $this->actualizar = $actualizar;
-
+    
         return $this;
     }
 
@@ -173,7 +173,7 @@ class PermisosAcceso
     public function setEliminar($eliminar)
     {
         $this->eliminar = $eliminar;
-
+    
         return $this;
     }
 

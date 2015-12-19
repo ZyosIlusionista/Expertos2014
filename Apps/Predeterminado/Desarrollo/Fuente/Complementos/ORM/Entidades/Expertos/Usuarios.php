@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Usuarios
  *
- * @Table(name="USUARIOS", indexes={@Index(name="IDX_C8C51BBED6A52665", columns={"ESTADO"}), @Index(name="IDX_C8C51BBE8792A44A", columns={"EMPRESA"}), @Index(name="IDX_C8C51BBECCBA95C1", columns={"CARGO"}), @Index(name="IDX_C8C51BBEC23F5584", columns={"PERMISO"})})
+ * @Table(name="usuarios", indexes={@Index(name="IDX_C8C51BBED6A52665", columns={"ESTADO"}), @Index(name="IDX_C8C51BBE8792A44A", columns={"EMPRESA"}), @Index(name="IDX_C8C51BBECCBA95C1", columns={"CARGO"}), @Index(name="IDX_C8C51BBEC23F5584", columns={"PERMISO"})})
  * @Entity
  */
 class Usuarios
@@ -131,7 +131,7 @@ class Usuarios
     public function setUsuario($usuario)
     {
         $this->usuario = $usuario;
-
+    
         return $this;
     }
 
@@ -155,7 +155,7 @@ class Usuarios
     public function setPassword($password)
     {
         $this->password = $password;
-
+    
         return $this;
     }
 
@@ -179,7 +179,7 @@ class Usuarios
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+    
         return $this;
     }
 
@@ -203,7 +203,7 @@ class Usuarios
     public function setApellido($apellido)
     {
         $this->apellido = $apellido;
-
+    
         return $this;
     }
 
@@ -227,7 +227,7 @@ class Usuarios
     public function setCedula($cedula)
     {
         $this->cedula = $cedula;
-
+    
         return $this;
     }
 
@@ -251,7 +251,7 @@ class Usuarios
     public function setUsuarioRr($usuarioRr)
     {
         $this->usuarioRr = $usuarioRr;
-
+    
         return $this;
     }
 
@@ -275,7 +275,7 @@ class Usuarios
     public function setCorreo($correo)
     {
         $this->correo = $correo;
-
+    
         return $this;
     }
 
@@ -299,7 +299,7 @@ class Usuarios
     public function setEmpresa(\Entidades\Expertos\UsuariosEmpresa $empresa = null)
     {
         $this->empresa = $empresa;
-
+    
         return $this;
     }
 
@@ -323,7 +323,7 @@ class Usuarios
     public function setPermiso(\Entidades\Expertos\Permisos $permiso = null)
     {
         $this->permiso = $permiso;
-
+    
         return $this;
     }
 
@@ -347,7 +347,7 @@ class Usuarios
     public function setCargo(\Entidades\Expertos\UsuariosCargo $cargo = null)
     {
         $this->cargo = $cargo;
-
+    
         return $this;
     }
 
@@ -371,7 +371,7 @@ class Usuarios
     public function setEstado(\Entidades\Expertos\Estados $estado = null)
     {
         $this->estado = $estado;
-
+    
         return $this;
     }
 

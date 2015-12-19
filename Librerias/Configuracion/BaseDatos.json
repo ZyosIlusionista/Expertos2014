@@ -20,7 +20,7 @@
 	"Expertos" : {
 		"Desarrollo" : {
 			"dbname" : "expertos",
-			"user" : "expertos",
+			"user" : "root",
 			"password" : "1234567890",
 			"host" : "localhost",
 			"driver" : "pdo_mysql",
@@ -28,7 +28,7 @@
 		},
 		"Produccion" : {
 			"dbname" : "expertos",
-			"user" : "expertos",
+			"user" : "root",
 			"password" : "1234567890",
 			"host" : "localhost",
 			"driver" : "pdo_mysql",

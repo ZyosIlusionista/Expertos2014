@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Permisos
  *
- * @Table(name="PERMISOS", indexes={@Index(name="IDX_CA7797AFD6A52665", columns={"ESTADO"})})
+ * @Table(name="permisos", indexes={@Index(name="IDX_CA7797AFD6A52665", columns={"ESTADO"})})
  * @Entity
  */
 class Permisos
@@ -59,7 +59,7 @@ class Permisos
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+    
         return $this;
     }
 
@@ -83,7 +83,7 @@ class Permisos
     public function setEstado(\Entidades\Expertos\Estados $estado = null)
     {
         $this->estado = $estado;
-
+    
         return $this;
     }
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UsuariosCargo
  *
- * @Table(name="USUARIOS_CARGO")
+ * @Table(name="usuarios_cargo")
  * @Entity
  */
 class UsuariosCargo
@@ -49,7 +49,7 @@ class UsuariosCargo
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+    
         return $this;
     }
 

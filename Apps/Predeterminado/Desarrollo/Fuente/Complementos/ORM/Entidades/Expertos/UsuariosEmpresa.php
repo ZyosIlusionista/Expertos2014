@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UsuariosEmpresa
  *
- * @Table(name="USUARIOS_EMPRESA")
+ * @Table(name="usuarios_empresa", indexes={@Index(name="IDX_CD3F658BD6A52665", columns={"ESTADO"})})
  * @Entity
  */
 class UsuariosEmpresa
@@ -27,6 +27,16 @@ class UsuariosEmpresa
      * @Column(name="NOMBRE", type="string", length=255, nullable=false)
      */
     private $nombre;
+
+    /**
+     * @var \Entidades\Expertos\Estados
+     *
+     * @ManyToOne(targetEntity="Entidades\Expertos\Estados")
+     * @JoinColumns({
+     *   @JoinColumn(name="ESTADO", referencedColumnName="ID")
+     * })
+     */
+    private $estado;
 
 
     /**
@@ -49,7 +59,7 @@ class UsuariosEmpresa
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+    
         return $this;
     }
 
@@ -61,6 +71,30 @@ class UsuariosEmpresa
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param \Entidades\Expertos\Estados $estado
+     *
+     * @return UsuariosEmpresa
+     */
+    public function setEstado(\Entidades\Expertos\Estados $estado = null)
+    {
+        $this->estado = $estado;
+    
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return \Entidades\Expertos\Estados
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }
 

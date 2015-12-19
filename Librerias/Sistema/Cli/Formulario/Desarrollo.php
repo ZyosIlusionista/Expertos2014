@@ -91,7 +91,9 @@
 		 */
 		private function creacionArchivo() {
 			if(count($this->namespace) > 2):
-				mkdir(dirname($this->archivo), 0777, true);
+				if(is_dir(dirname($this->archivo)) == false):
+					mkdir(dirname($this->archivo), 0777, true);
+				endif;
 			endif;
 			touch($this->archivo);
 			$fopen = fopen($this->archivo, 'w');

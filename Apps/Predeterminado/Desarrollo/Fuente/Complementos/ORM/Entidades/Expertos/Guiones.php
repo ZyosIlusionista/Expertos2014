@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Guiones
  *
- * @Table(name="GUIONES", indexes={@Index(name="IDX_D37F645AD6A52665", columns={"ESTADO"})})
+ * @Table(name="guiones", indexes={@Index(name="IDX_D37F645AD6A52665", columns={"ESTADO"})})
  * @Entity
  */
 class Guiones
@@ -66,7 +66,7 @@ class Guiones
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+    
         return $this;
     }
 
@@ -90,7 +90,7 @@ class Guiones
     public function setPlantilla($plantilla)
     {
         $this->plantilla = $plantilla;
-
+    
         return $this;
     }
 
@@ -114,7 +114,7 @@ class Guiones
     public function setEstado(\Entidades\Expertos\Estados $estado = null)
     {
         $this->estado = $estado;
-
+    
         return $this;
     }
 

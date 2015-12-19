@@ -75,9 +75,9 @@
 			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 3, 'PERMISO' => 1, 'MODULO' => 3, 'ACCESO' => 1));
 			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 4, 'PERMISO' => 1, 'MODULO' => 4, 'ACCESO' => 1));
 			
-			$this->conexion->insert('USUARIOS_EMPRESA', array('ID' => 1, 'NOMBRE' => 'CLARO'));
+			$this->conexion->insert('USUARIOS_EMPRESA', array('ID' => 1, 'NOMBRE' => 'CLARO', 'ESTADO' => 1));
 			$this->conexion->insert('USUARIOS_CARGO', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR DEL SISTEMA'));
-			$this->conexion->insert('USUARIOS', array('ID' => 1, 'USUARIO' => 'ADMIN', 'PASSWORD' => sha1('123'), 'NOMBRE' => 'ADMINISTRADOR', 'APELLIDO' => 'DEL SISTEMA', 'USUARIO_RR' => 'ADMINRR', 'CORREO' => 'ADMIN@ADMIN.COM', 'ESTADO' => 1, 'EMPRESA' => 1, 'CARGO' => 1, 'PERMISO' => 1));
+			$this->conexion->insert('USUARIOS', array('ID' => 1, 'USUARIO' => 'ADMIN', 'PASSWORD' => sha1('123'), 'NOMBRE' => 'ADMINISTRADOR', 'APELLIDO' => 'DEL SISTEMA', 'CEDULA' => 1234567890, 'USUARIO_RR' => 'ADMINRR', 'CORREO' => 'ADMIN@ADMIN.COM', 'ESTADO' => 1, 'EMPRESA' => 1, 'CARGO' => 1, 'PERMISO' => 1));
 			
 		}
 		
@@ -122,7 +122,13 @@
 				'length' => 255,
 				'comment' => 'Nombre de la Empresa'
 			));
+			$this->usuarios_empresa->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true,
+				'length' => 20,
+				'comment' => 'Estado de la Empresa [ID de la tabla ESTADOS]'
+			));
 			$this->usuarios_empresa->setPrimaryKey(array('ID'));
+			$this->usuarios_empresa->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
 		}
 		
 		/**

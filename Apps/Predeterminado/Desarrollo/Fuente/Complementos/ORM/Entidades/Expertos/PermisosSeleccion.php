@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PermisosSeleccion
  *
- * @Table(name="PERMISOS_SELECCION", indexes={@Index(name="IDX_6A6AFAE4C23F5584", columns={"PERMISO"}), @Index(name="IDX_6A6AFAE41C0908B0", columns={"MODULO"}), @Index(name="IDX_6A6AFAE4E290B09D", columns={"ACCESO"})})
+ * @Table(name="permisos_seleccion", indexes={@Index(name="IDX_6A6AFAE4C23F5584", columns={"PERMISO"}), @Index(name="IDX_6A6AFAE41C0908B0", columns={"MODULO"}), @Index(name="IDX_6A6AFAE4E290B09D", columns={"ACCESO"})})
  * @Entity
  */
 class PermisosSeleccion
@@ -72,7 +72,7 @@ class PermisosSeleccion
     public function setModulo(\Entidades\Expertos\PermisosModulos $modulo = null)
     {
         $this->modulo = $modulo;
-
+    
         return $this;
     }
 
@@ -96,7 +96,7 @@ class PermisosSeleccion
     public function setPermiso(\Entidades\Expertos\Permisos $permiso = null)
     {
         $this->permiso = $permiso;
-
+    
         return $this;
     }
 
@@ -120,7 +120,7 @@ class PermisosSeleccion
     public function setAcceso(\Entidades\Expertos\PermisosAcceso $acceso = null)
     {
         $this->acceso = $acceso;
-
+    
         return $this;
     }
 
