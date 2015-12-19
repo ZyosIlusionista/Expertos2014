@@ -218,7 +218,7 @@
 			foreach ($comentario AS $valor):
 				if(preg_match('/@/', $valor, $resultado, PREG_OFFSET_CAPTURE) == true):
 					$param = explode(' ', $valor);
-					$lista[mb_strtolower(str_replace('@', '', $param[0]))] = (isset($param[1]) == true) ? mb_strtolower($param[1]) : (boolean) false;
+					$lista[mb_strtolower(str_replace('@', '', $param[0]))] = (isset($param[1]) == true) ? trim(mb_strtolower($param[1])) : (boolean) false;
 				endif;
 			endforeach;
 			return (isset($lista) == true) ? $lista : array();

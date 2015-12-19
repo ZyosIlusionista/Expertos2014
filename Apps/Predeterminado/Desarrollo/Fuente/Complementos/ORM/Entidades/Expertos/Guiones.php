@@ -5,12 +5,12 @@ namespace Entidades\Expertos;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Permisos
+ * Guiones
  *
- * @Table(name="PERMISOS", indexes={@Index(name="IDX_CA7797AFD6A52665", columns={"ESTADO"})})
+ * @Table(name="GUIONES", indexes={@Index(name="IDX_D37F645AD6A52665", columns={"ESTADO"})})
  * @Entity
  */
-class Permisos
+class Guiones
 {
     /**
      * @var integer
@@ -27,6 +27,13 @@ class Permisos
      * @Column(name="NOMBRE", type="string", length=255, nullable=false)
      */
     private $nombre;
+
+    /**
+     * @var string
+     *
+     * @Column(name="PLANTILLA", type="text", nullable=false)
+     */
+    private $plantilla;
 
     /**
      * @var \Entidades\Expertos\Estados
@@ -54,7 +61,7 @@ class Permisos
      *
      * @param string $nombre
      *
-     * @return Permisos
+     * @return Guiones
      */
     public function setNombre($nombre)
     {
@@ -74,11 +81,35 @@ class Permisos
     }
 
     /**
+     * Set plantilla
+     *
+     * @param string $plantilla
+     *
+     * @return Guiones
+     */
+    public function setPlantilla($plantilla)
+    {
+        $this->plantilla = $plantilla;
+
+        return $this;
+    }
+
+    /**
+     * Get plantilla
+     *
+     * @return string
+     */
+    public function getPlantilla()
+    {
+        return $this->plantilla;
+    }
+
+    /**
      * Set estado
      *
      * @param \Entidades\Expertos\Estados $estado
      *
-     * @return Permisos
+     * @return Guiones
      */
     public function setEstado(\Entidades\Expertos\Estados $estado = null)
     {

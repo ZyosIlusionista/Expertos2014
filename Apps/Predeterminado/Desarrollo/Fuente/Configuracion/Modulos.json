@@ -17,6 +17,11 @@
 			"habilitado" : true,
 			"mantenimiento" : false,
 			"descripcion" : "Modulo de administración de usuarios"
+		},
+		"Guiones" : {
+			"habilitado" : true,
+			"mantenimiento" : false,
+			"descripcion" : "Modulo de creacion de guiones"
 		}
 	}
 }

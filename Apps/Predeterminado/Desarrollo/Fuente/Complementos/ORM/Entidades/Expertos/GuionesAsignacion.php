@@ -5,12 +5,12 @@ namespace Entidades\Expertos;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Permisos
+ * GuionesAsignacion
  *
- * @Table(name="PERMISOS", indexes={@Index(name="IDX_CA7797AFD6A52665", columns={"ESTADO"})})
+ * @Table(name="GUIONES_ASIGNACION", indexes={@Index(name="IDX_A823236749EC05C6", columns={"GUION"}), @Index(name="IDX_A8232367D6A52665", columns={"ESTADO"})})
  * @Entity
  */
-class Permisos
+class GuionesAsignacion
 {
     /**
      * @var integer
@@ -27,6 +27,16 @@ class Permisos
      * @Column(name="NOMBRE", type="string", length=255, nullable=false)
      */
     private $nombre;
+
+    /**
+     * @var \Entidades\Expertos\Guiones
+     *
+     * @ManyToOne(targetEntity="Entidades\Expertos\Guiones")
+     * @JoinColumns({
+     *   @JoinColumn(name="GUION", referencedColumnName="ID")
+     * })
+     */
+    private $guion;
 
     /**
      * @var \Entidades\Expertos\Estados
@@ -54,7 +64,7 @@ class Permisos
      *
      * @param string $nombre
      *
-     * @return Permisos
+     * @return GuionesAsignacion
      */
     public function setNombre($nombre)
     {
@@ -74,11 +84,35 @@ class Permisos
     }
 
     /**
+     * Set guion
+     *
+     * @param \Entidades\Expertos\Guiones $guion
+     *
+     * @return GuionesAsignacion
+     */
+    public function setGuion(\Entidades\Expertos\Guiones $guion = null)
+    {
+        $this->guion = $guion;
+
+        return $this;
+    }
+
+    /**
+     * Get guion
+     *
+     * @return \Entidades\Expertos\Guiones
+     */
+    public function getGuion()
+    {
+        return $this->guion;
+    }
+
+    /**
      * Set estado
      *
      * @param \Entidades\Expertos\Estados $estado
      *
-     * @return Permisos
+     * @return GuionesAsignacion
      */
     public function setEstado(\Entidades\Expertos\Estados $estado = null)
     {

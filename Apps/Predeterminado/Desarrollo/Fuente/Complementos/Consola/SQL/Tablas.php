@@ -5,32 +5,42 @@
 	
 	class Tablas extends Consola {
 		
-		private $conexion, $esquema, $plataforma;
+		private $conexion, $esquema, $plataforma, $opcForeign;
 		private $estados;
 		private $usuarios_empresa, $usuarios_cargo, $usuarios;
 		private $permisos, $permisos_modulo, $permisos_acceso, $permisos_seleccion;
+		private $guiones, $guiones_asignacion;
 		
 		function __construct() {
 			$conexion = new \Neural\BD\Conexion(APPBD, APP);
 			$this->conexion = $conexion->doctrineDBAL();
 			$this->esquema = new \Doctrine\DBAL\Schema\Schema();
 			$this->plataforma = $this->conexion->getDatabasePlatform();
+			$this->opcForeign = array('onDelete' => 'no action', 'onUpdate' => 'no action');
 		}
 		
 		public function ejecutar() {
+			#---------------------------------------
 			$this->tbl_estados();
+			#---------------------------------------
 			$this->tbl_permisos();
 			$this->tbl_permisos_modulos();
 			$this->tbl_permisos_acceso();
 			$this->tbl_permisos_seleccion();
+			#---------------------------------------
 			$this->tbl_usuarios_empresa();
 			$this->tbl_usuarios_cargo();
 			$this->tbl_usuarios();
+			#---------------------------------------
+			$this->tbl_guiones();
+			$this->tbl_guiones_asignacion();
+			#---------------------------------------
 			
 			
+			#---------------------------------------
 			$queries = $this->esquema->toSql($this->plataforma);
 			$dropSchema = $this->esquema->toDropSql($this->plataforma);
-			
+			#---------------------------------------
 			//print_r($dropSchema);
 			//print_r($queries);
 			
@@ -40,7 +50,6 @@
 			print_r("\n\n");
 			print_r(implode("\n\n", $queries));
 			print_r("\n\n");
-			
 			
 			foreach ($queries as $sql):
 				$this->conexion->executeQuery($sql);
@@ -55,12 +64,16 @@
 			
 			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 1, 'NOMBRE' => 'Central', 'ESTADO' => 1));
 			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 2, 'NOMBRE' => 'Usuarios', 'ESTADO' => 1));
+			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 3, 'NOMBRE' => 'Guiones', 'ESTADO' => 1));
+			$this->conexion->insert('PERMISOS_MODULOS', array('ID' => 4, 'NOMBRE' => 'Permisos', 'ESTADO' => 1));
 			
 			$this->conexion->insert('PERMISOS_ACCESO', array('ID' => 1, 'NOMBRE' => 'ACCESO TOTAL', 'LECTURA' => 1, 'ESCRITURA' => 1, 'ACTUALIZAR' => 1, 'ELIMINAR' => 1));
 			
 			$this->conexion->insert('PERMISOS', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR', 'ESTADO' => 1));
 			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 1, 'PERMISO' => 1, 'MODULO' => 1, 'ACCESO' => 1));
 			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 2, 'PERMISO' => 1, 'MODULO' => 2, 'ACCESO' => 1));
+			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 3, 'PERMISO' => 1, 'MODULO' => 3, 'ACCESO' => 1));
+			$this->conexion->insert('PERMISOS_SELECCION', array('ID' => 4, 'PERMISO' => 1, 'MODULO' => 4, 'ACCESO' => 1));
 			
 			$this->conexion->insert('USUARIOS_EMPRESA', array('ID' => 1, 'NOMBRE' => 'CLARO'));
 			$this->conexion->insert('USUARIOS_CARGO', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR DEL SISTEMA'));
@@ -160,7 +173,7 @@
 				'comment' => 'ID del Estado del Permiso [ID de la tabla ESTADOS]'
 			));
 			$this->permisos->setPrimaryKey(array('ID'));
-			$this->permisos->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->permisos->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
 		}
 		
 		/**
@@ -191,7 +204,7 @@
 				'comment' => 'ID del Estado del Modulo [ID de la tabla ESTADOS]'
 			));
 			$this->permisos_modulo->setPrimaryKey(array('ID'));
-			$this->permisos_modulo->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->permisos_modulo->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
 		}
 		
 		/**
@@ -233,6 +246,11 @@
 				'length' => 255,
 				'comment' => 'Apellidos del Usuario'
 			));
+			$this->usuarios->addColumn('CEDULA', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'Cedula del Usuario'
+			));
 			$this->usuarios->addColumn('USUARIO_RR', 'string', array(
 				'notnull' => true, 
 				'length' => 255,
@@ -265,10 +283,10 @@
 			));
 			
 			$this->usuarios->setPrimaryKey(array('ID'));
-			$this->usuarios->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
-			$this->usuarios->addForeignKeyConstraint($this->usuarios_empresa, array('EMPRESA'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
-			$this->usuarios->addForeignKeyConstraint($this->usuarios_cargo, array('CARGO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
-			$this->usuarios->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->usuarios->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+			$this->usuarios->addForeignKeyConstraint($this->usuarios_empresa, array('EMPRESA'), array('ID'), $this->opcForeign);
+			$this->usuarios->addForeignKeyConstraint($this->usuarios_cargo, array('CARGO'), array('ID'), $this->opcForeign);
+			$this->usuarios->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'), $this->opcForeign);
 		}
 		
 		/**
@@ -348,8 +366,88 @@
 				'comment' => 'ID del Permiso del Permiso Acceso [ID de la tabla PERMISOS_ACCESO]'
 			));
 			$this->permisos_seleccion->setPrimaryKey(array('ID'));
-			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
-			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_modulo, array('MODULO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
-			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_acceso, array('ACCESO'), array('ID'), array('onDelete' => 'no action', 'onUpdate' => 'no action'));
+			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos, array('PERMISO'), array('ID'), $this->opcForeign);
+			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_modulo, array('MODULO'), array('ID'), $this->opcForeign);
+			$this->permisos_seleccion->addForeignKeyConstraint($this->permisos_acceso, array('ACCESO'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones()
+		 * 
+		 * Genera la tabla para las distintas plantillas de
+		 * los diferentes guiones
+		 * 
+		 * @foreign ESTADOS
+		 * @return void
+		 */
+		private function tbl_guiones() {
+			$this->guiones = $this->esquema->createTable('GUIONES');
+			$this->guiones->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID de guion'
+			));
+			$this->guiones->addColumn('NOMBRE', 'string', array(
+				'notnull' => true, 
+				'length' => 255,
+				'comment' => 'Nombre de la plantilla del guion'
+			));
+			$this->guiones->addColumn('PLANTILLA', 'text', array(
+				'notnull' => true, 
+				'length' => false,
+				'comment' => 'plantilla del guion'
+			));
+			$this->guiones->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Estado del Guion [ID de la tabla ESTADOS]'
+			));
+			$this->guiones->setPrimaryKey(array('ID'));
+			$this->guiones->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_asignacion()
+		 * 
+		 * Genera la tabla de asignaciones de plantillas
+		 * para las diferentes partes o formularios que 
+		 * se requieren
+		 * 
+		 * @foreign GUIONES
+		 * @foreign ESTADOS
+		 * 
+		 * @return void
+		 */
+		private function tbl_guiones_asignacion() {
+			$this->guiones_asignacion = $this->esquema->createTable('GUIONES_ASIGNACION');
+			$this->guiones_asignacion->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID de asignación del guion'
+			));
+			$this->guiones_asignacion->addColumn('NOMBRE', 'string', array(
+				'notnull' => true, 
+				'length' => 255,
+				'comment' => 'Nombre de la asignacion'
+			));
+			$this->guiones_asignacion->addColumn('GUION', 'bigint', array(
+				'notnull' => true,
+				'length' => 20,
+				'comment' => 'ID del del guion [ID de la tabla de GUIONES]'
+			));
+			$this->guiones_asignacion->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Estado de la asignacion [ID de la tabla ESTADOS]'
+			));
+			$this->guiones_asignacion->setPrimaryKey(array('ID'));
+			$this->guiones_asignacion->addForeignKeyConstraint($this->guiones, array('GUION'), array('ID'), $this->opcForeign);
+			$this->guiones_asignacion->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+		}
+		
+		private function tbl_guiones_registro() {
+			
 		}
 	}

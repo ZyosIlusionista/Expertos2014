@@ -50,6 +50,13 @@ class Usuarios
     private $apellido;
 
     /**
+     * @var integer
+     *
+     * @Column(name="CEDULA", type="bigint", nullable=false)
+     */
+    private $cedula;
+
+    /**
      * @var string
      *
      * @Column(name="USUARIO_RR", type="string", length=255, nullable=false)
@@ -208,6 +215,30 @@ class Usuarios
     public function getApellido()
     {
         return $this->apellido;
+    }
+
+    /**
+     * Set cedula
+     *
+     * @param integer $cedula
+     *
+     * @return Usuarios
+     */
+    public function setCedula($cedula)
+    {
+        $this->cedula = $cedula;
+
+        return $this;
+    }
+
+    /**
+     * Get cedula
+     *
+     * @return integer
+     */
+    public function getCedula()
+    {
+        return $this->cedula;
     }
 
     /**

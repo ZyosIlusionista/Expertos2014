@@ -23,6 +23,9 @@
 		 */
 		public function Index() {
 			$this->plantilla->parametroGlobal('sesion', $this->sesionPHP->obtenerInfo());
-			echo $this->plantilla->mostrarPlantilla('Base.html');
+			$this->plantilla->filtro('print_r', function($info) {
+				return print_r($info);
+			});
+			echo $this->plantilla->mostrarPlantilla('Index', 'Index.html');
 		}
 	}
