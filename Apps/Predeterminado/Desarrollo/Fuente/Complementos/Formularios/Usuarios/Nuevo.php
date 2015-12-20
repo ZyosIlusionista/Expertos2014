@@ -23,6 +23,16 @@
 		private $usuario;
 
 		/**
+		 * validacion::password
+		 * 
+		 * @Columna "password"
+		 * @Validacion {"texto":"Es necesario ingresar el Usuario"}
+		 * @Existencia false
+		 * @Tipo "texto"
+		 */
+		private $password;
+
+		/**
 		 * validacion::nombre
 		 * 
 		 * @Columna "nombre"
@@ -108,7 +118,16 @@
 		 * @return texto
 		 */
 		public function getUsuario() {
-			return $this->usuario;
+			return trim(mb_strtoupper($this->usuario));
+		}
+
+		/**
+		 * validacion::getPassword()
+		 * 
+		 * @return texto
+		 */
+		public function getPassword() {
+			return sha1(trim($this->password));
 		}
 
 		/**
@@ -117,7 +136,7 @@
 		 * @return texto
 		 */
 		public function getNombre() {
-			return $this->nombre;
+			return trim(mb_strtoupper($this->nombre));
 		}
 
 		/**
@@ -126,7 +145,7 @@
 		 * @return texto
 		 */
 		public function getApellido() {
-			return $this->apellido;
+			return trim(mb_strtoupper($this->apellido));
 		}
 
 		/**
@@ -135,7 +154,7 @@
 		 * @return texto
 		 */
 		public function getCedula() {
-			return $this->cedula;
+			return trim(mb_strtoupper($this->cedula));
 		}
 
 		/**
@@ -144,7 +163,7 @@
 		 * @return texto
 		 */
 		public function getAs400() {
-			return $this->as400;
+			return trim(mb_strtoupper($this->as400));
 		}
 
 		/**
@@ -153,7 +172,7 @@
 		 * @return texto
 		 */
 		public function getCorreo() {
-			return $this->correo;
+			return trim(mb_strtoupper($this->correo));
 		}
 
 		/**
@@ -194,6 +213,16 @@
 		}
 
 		/**
+		 * validacion::setPassword()
+		 * 
+		 * @param texto $Password
+		 * @return void
+		 */
+		public function  setPassword($password = false) {
+			$this->password = $password;
+		}
+
+		/**
 		 * validacion::setNombre()
 		 * 
 		 * @param texto $Nombre
@@ -220,6 +249,7 @@
 		 * @return void
 		 */
 		public function  setCedula($cedula = false) {
+			$this->password = $cedula;
 			$this->cedula = $cedula;
 		}
 

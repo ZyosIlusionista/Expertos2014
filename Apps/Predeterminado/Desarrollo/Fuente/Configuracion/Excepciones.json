@@ -3,6 +3,7 @@
 	"asignado" : {
 		"mantenimiento" : [ "Excepciones", "Predeterminado.html" ],
 		"LoginMensajes" : [ "Excepciones", "Login", "ErrorValidacion.json" ],
-		"NoPermisos" : [ "Excepciones", "NoPermisos.html" ]
+		"NoPermisos" : [ "Excepciones", "NoPermisos.html" ],
+		"peticionAjax" : [ "Excepciones", "peticionAjax.json" ]
 	}
 }

@@ -132,10 +132,16 @@
 		private function setClase() {
 			$data = call_user_func(array($this->peticion, $this->propiedad['clase']['metodo']));
 			foreach ($this->propiedad['formulario'] AS $campo => $param):
-				if(array_key_exists($campo, $data) == true):
-					call_user_func_array(array($this->namespace, 'set'.ucfirst(mb_strtolower($campo))), array($this->setClaseSeleccion($data[$campo], $param['tipo'])));
+				if($param['existencia'] == true):
+					if(array_key_exists($campo, $data) == true):
+						call_user_func_array(array($this->namespace, 'set'.ucfirst(mb_strtolower($campo))), array($this->setClaseSeleccion($data[$campo], $param['tipo'])));
+					else:
+						throw new Excepcion(sprintf('No existe el campo: %s en el proceso del formulario', $campo), 0);
+					endif;
 				else:
-					throw new Excepcion(sprintf('No existe el campo: %s en el proceso del formulario', $campo), 0);
+					if(array_key_exists($campo, $data) == true):
+						call_user_func_array(array($this->namespace, 'set'.ucfirst(mb_strtolower($campo))), array($this->setClaseSeleccion($data[$campo], $param['tipo'])));
+					endif;
 				endif;
 			endforeach;
 		}

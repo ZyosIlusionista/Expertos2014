@@ -76,6 +76,22 @@
 			
 			<!-- Demo Settings -->
 			<script src="{{ RUTA_PUBLICO|e }}/assets/js/neon-demo.js"></script>
+
+{#
+	/**
+	 * Librerias SweetAlert
+	 *
+	 * Se agregan las librerias sweetalert para los
+	 * procesos de funcionalidad
+	 * 
+	 * @script /sweetalert.min.js
+	 * @css /sweetalert.css
+	 * @param RUTA_PUBLICO
+	 * @url /assets/sweetalert/dist
+	 */
+#}
+			<script src="{{ RUTA_PUBLICO|e }}/assets/sweetalert/dist/sweetalert.min.js"></script>
+			<link rel="stylesheet" type="text/css" href="{{ RUTA_PUBLICO|e }}/assets/sweetalert/dist/sweetalert.css">
 			
 			{% block script %}{% endblock %}
 			

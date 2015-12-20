@@ -5,6 +5,12 @@
 			.control-label, .panel-title {
 				font-weight: bold;
 			}
+			.error {
+				font-family: verdana;
+				font-size: 10px;
+				font-weight: bold;
+				color: red;
+			}
 		</style>
 	{% endblock %}
 	
@@ -21,47 +27,47 @@
 		
 					<div class="panel-body">
 						
-						<form role="form" class="form-horizontal form-groups-bordered">
+						<form action="javascript:;" role="form" method="POST" name="formulario" id="formulario" class="form-horizontal form-groups-bordered">
 		
 							<div class="form-group">
 								<label for="field-1" class="col-sm-3 control-label">Usuario</label>
 								<div class="col-sm-5">
-									<input type="text" name="usuario" class="form-control" id="field-1" placeholder="Usuario">
+									<input type="text" name="usuario" class="form-control" placeholder="Usuario">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="field-1" class="col-sm-3 control-label">Nombres</label>
 								<div class="col-sm-5">
-									<input type="text" name="nombre" class="form-control" id="field-1" placeholder="Nombres del Usuario">
+									<input type="text" name="nombre" class="form-control" placeholder="Nombres del Usuario">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="field-1" class="col-sm-3 control-label">Apellidos</label>
 								<div class="col-sm-5">
-									<input type="text" name="apellido" class="form-control" id="field-1" placeholder="Apellidos del Usuario">
+									<input type="text" name="apellido" class="form-control" placeholder="Apellidos del Usuario">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="field-1" class="col-sm-3 control-label">Cédula</label>
 								<div class="col-sm-5">
-									<input type="number" name="cedula" class="form-control" id="field-1" placeholder="Cédula del Usuario">
+									<input type="number" name="cedula" class="form-control" placeholder="Cédula del Usuario">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="field-1" class="col-sm-3 control-label">Usuario RR (AS400)</label>
 								<div class="col-sm-5">
-									<input type="text" name="as400" class="form-control" id="field-1" placeholder="Usuario as400">
+									<input type="text" name="as400" class="form-control" placeholder="Usuario as400">
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label for="field-1" class="col-sm-3 control-label">Correo</label>
 								<div class="col-sm-5">
-									<input type="email" name="correo" class="form-control" id="field-1" placeholder="Correo Corporativo">
+									<input type="email" name="correo" class="form-control" placeholder="Correo Corporativo">
 								</div>
 							</div>
 		
@@ -135,4 +141,45 @@
 				</div>
 			</div>
 		</div>
+	{% endblock %}
+	
+	{% block script %}
+		
+{#
+	/**
+	 * Script peticion.js
+	 *
+	 * Genera el script correspondiente para la peticion
+	 * ajax para la validacion del formulario, en este caso
+	 * se genera una validacion adicional para determinar
+	 * que se tengan los permisos correspondientes de 
+	 * escritura para ejecutar la peticion
+	 * 
+	 * @permiso escritura
+	 * @param RUTA_APP
+	 * @url /Usuarios/Nuevo/js/peticion.js
+	 */
+#}
+		{% if sesion.permisos.Usuarios.escritura == 1 %}
+			<script type="text/javascript" src="{{ RUTA_APP|e }}/Usuarios/Nuevo/js/peticion.js"></script>
+		{% endif %}
+{# -------------------------------------------------------------- #}
+
+{#
+	/**
+	 * Script {{ script|raw }}
+	 *
+	 * Muestra el script creado para generar la validacion del
+	 * lado del usuario en el cual genera una capa adicional de
+	 * seguridad e integridad de los datos que se ingresan en
+	 * el formulario
+	 *
+	 * @permiso escritura
+	 * @param script
+	 */
+#}
+		{% if sesion.permisos.Usuarios.escritura == 1 %}
+			{{ script|raw }}
+		{% endif %}
+		
 	{% endblock %}
