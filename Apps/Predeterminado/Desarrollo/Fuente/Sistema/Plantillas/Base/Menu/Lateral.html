@@ -123,13 +123,27 @@
 					</a>
 				</li>
 				
-				{# muestra el formulario para agregar accesos #}
+				{# muestra el formulario para agregar Permisos #}
 				{% if sesion.permisos.Permisos.escritura == 1 %}
 					
 					<li>
 						<a href="{{ RUTA_APP|e }}/Permisos/Nuevo/acceso">
 							<i class="entypo-list-add"></i>
 							<span class="title">Nuevo Acceso</span>
+						</a>
+					</li>
+					
+					<li>
+						<a href="{{ RUTA_APP|e }}/Permisos/Nuevo/modulo">
+							<i class="entypo-list-add"></i>
+							<span class="title">Nuevo Modulo</span>
+						</a>
+					</li>
+					
+					<li>
+						<a href="{{ RUTA_APP|e }}/Permisos/Nuevo/Permiso">
+							<i class="entypo-list-add"></i>
+							<span class="title">Nuevo Permiso</span>
 						</a>
 					</li>
 					

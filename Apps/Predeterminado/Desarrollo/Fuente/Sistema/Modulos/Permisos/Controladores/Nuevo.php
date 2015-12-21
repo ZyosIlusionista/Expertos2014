@@ -23,7 +23,8 @@
 			parent::__construct();
 			$this->sesionPHP = new Sesion();
 			$this->metodos = array(
-				'1268771b' => array('titulo' => 'Acceso', 'metodo' => 'guardarAcceso', 'namespace' => '\Formularios\Permisos\Nuevo\Acceso')
+				'1268771b' => array('titulo' => 'Acceso', 'metodo' => 'guardarAcceso', 'namespace' => '\Formularios\Permisos\Nuevo\Acceso'),
+				'ecf1cf36' => array('titulo' => 'Modulo', 'metodo' => 'guardarModulo', 'namespace' => '\Formularios\Permisos\Nuevo\Modulo')
 			);
 		}
 		
@@ -52,10 +53,7 @@
 		public function acceso() {
 			$this->plantilla->parametroGlobal('sesion', $this->sesionPHP->obtenerInfo());
 			$this->plantilla->parametro('script', $this->accesoJQuery());
-			$this->plantilla->parametro('tipo', '1268771b');
 			echo $this->plantilla->mostrarPlantilla('Nuevo', 'acceso.html');
-			
-			//print_r(hash('crc32b', 'acceso'));
 		}
 		
 		/**
@@ -107,6 +105,114 @@
 			$this->procesar('1268771b');
 		}
 		
+		
+		/**
+		 * Nuevo::modulo()
+		 *
+		 * Genera el formulario para el proceso de almacenamiento
+		 * de un nuevo modulo en la base de datos
+		 * 
+		 * @permiso escritura 
+		 * @return string
+		 */
+		public function modulo() {
+			$this->plantilla->parametroGlobal('sesion', $this->sesionPHP->obtenerInfo());
+			$this->plantilla->parametro('script', $this->moduloJQuery());
+			echo $this->plantilla->mostrarPlantilla('Nuevo', 'modulo.html');
+		}
+		
+		/**
+		 * Nuevo::moduloJQuery()
+		 *
+		 * Genera la validacion del formulario del lado del usuario utilizando
+		 * la libreria validate de JQuery para dicho proposito
+		 * 
+		 * @permiso escritura 
+		 * @return string
+		 */
+		private function moduloJQuery() {
+			$val = new Formulario(APP, false, true);
+			$val->nombre()
+						->_requerido('Ingrese el Nombre del Modulo')
+						->_minCaracteres(5, 'Debe ingresar minimo 5 caracteres')
+						->_maxCaracteres(200, 'No puede contener más de 200 Caracteres')
+						->_remoto($this->ruta->modulo('Permisos', 'Nuevo', 'moduloExistencia'), 'POST', 'El modulo ya se encuentra registrado');
+			$val->peticionAjax('peticion.init(formulario);');
+			
+			return $val->mostrarValidacion('formulario');
+		}
+		
+		/**
+		 * Nuevo::moduloExistencia()
+		 * 
+		 * Genera la consulta del modulo correspondiente si
+		 * ya se encuentra registrado en la base de datos
+		 * 
+		 * @permiso escritura
+		 * @return string
+		 */
+		public function moduloExistencia() {
+			if($this->peticion->ajax() == true):
+				echo ($this->peticion->postExistencia() == true) ? $this->moduloExistenciaProceso() : 'false';
+			else:
+				throw new Excepcion('No es posible procesar su petición', 0, APP);
+			endif;
+		}
+		
+		/**
+		 * Nuevo::moduloExistenciaProceso()
+		 * 
+		 * Genera el proceso de validacion correspondiente al campo
+		 * para validar su existencia
+		 * 
+		 * @permiso escritura
+		 * @return void
+		 */
+		private function moduloExistenciaProceso() {
+			if($this->validarFormulario->validar('\Formularios\Permisos\Nuevo\Modulo') == true):
+				return ($this->modelo->existenciaModulo($this->validarFormulario->datosFormulario()) == true) ? 'false' : 'true';
+			else:
+				return 'false';
+			endif;
+		}
+		
+		/**
+		 * Nuevo::moduloJs()
+		 * 
+		 * Genera el script correspondiente del transporte
+		 * de la peticion ajax a traves de js
+		 * 
+		 * @permiso escritura 
+		 * @return string
+		 */
+		public function moduloJs() {
+			$this->cabecera->header('js');
+			echo $this->plantilla->mostrarPlantilla('Nuevo', 'moduloJs.js');
+		}
+		
+		/**
+		 * Nuevo::moduloProcesar()
+		 * 
+		 * Inicial el proceso correspondiente para la 
+		 * validacion y almacenamiento de los datos
+		 * correspondientes
+		 * 
+		 * @permiso escritura
+		 * @return string
+		 */
+		public function moduloProcesar() {
+			$this->procesar('ecf1cf36');
+		}
+		
+		public function permiso() {
+			$this->plantilla->parametroGlobal('sesion', $this->sesionPHP->obtenerInfo());
+			echo $this->plantilla->mostrarPlantilla('Nuevo', 'permiso.html');
+		}
+		
+##############################################################################################################################
+##############################################################################################################################
+##############################################################################################################################
+##############################################################################################################################
 		/**
 		 * Nuevo::procesar()
 		 * 

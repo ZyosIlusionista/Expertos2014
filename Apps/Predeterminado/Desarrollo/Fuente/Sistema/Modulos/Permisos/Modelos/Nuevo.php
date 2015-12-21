@@ -2,6 +2,7 @@
 	
 	namespace Modelo\Modulo\Permisos;
 	use \Entidades\Expertos\PermisosAcceso;
+	use \Entidades\Expertos\PermisosModulos;
 	use \Neural\BD\Conexion;
 	
 	class Nuevo {
@@ -25,7 +26,6 @@
 		 * Nuevo::guardarAcceso()
 		 *
 		 * Genera el proceso para guardar los accesos correspondientes
-		 *  
 		 * @param array $array
 		 * @return integer
 		 */
@@ -39,5 +39,36 @@
 			$this->entidad->persist($acceso);
 			$this->entidad->flush();
 			return $acceso->getId();
+		}
+		
+		/**
+		 * Nuevo::existenciaModulo()
+		 *
+		 * Genera la validacion de la existencia del modulo en la
+		 * base de datos y retorna true para existe false no existe
+		 *  
+		 * @param array $array
+		 * @return bool
+		 */
+		public function existenciaModulo($array = false) {
+			$consulta = $this->entidad->getRepository('\Entidades\Expertos\PermisosModulos')->findOneBy($array);
+			return (count($consulta) >= 1) ? true : false;
+		}
+		
+		/**
+		 * Nuevo::guardarModulo()
+		 * 
+		 * Genera el proceso para guardar los accesos correspondientes
+		 * @param array $array
+		 * @return integer
+		 */
+		public function guardarModulo($array = false) {
+			$modulo = new PermisosModulos();
+			$modulo->setNombre($array['nombre']);
+			$modulo->setEstado($this->entidad->getRepository('\Entidades\Expertos\Estados')->findOneBy(array('id' => 1)));
+			
+			$this->entidad->persist($modulo);
+			$this->entidad->flush();
+			return $modulo->getId();
 		}
 	}
