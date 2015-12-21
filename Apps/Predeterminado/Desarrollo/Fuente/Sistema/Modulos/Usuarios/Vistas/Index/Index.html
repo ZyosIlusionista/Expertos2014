@@ -20,6 +20,7 @@
 					<thead>
 						<tr>
 							<th>Nombre</th>
+							<th>Usuario</th>
 							<th>AS400</th>
 							<th>Empresa</th>
 							<th>Cargo</th>
@@ -33,6 +34,7 @@
 							{% for info in consulta %}
 								<tr>
 									<td>{{ info.getApellido|e }} - {{ info.getNombre|e }}</td>
+									<td>{{ info.getUsuario|e }}</td>
 									<td>{{ info.getUsuarioRr|e }}</td>
 									<td>{{ info.getEmpresa.getNombre|e }}</td>
 									<td>{{ info.getCargo.getNombre|e }}</td>

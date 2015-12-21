@@ -1,0 +1,82 @@
+	{% extends 'Base.html' %}
+	
+	{% block css %}
+		<style type="text/css">
+			th, td {
+				text-align: center;
+				font-weight: bold;
+			}
+		</style>
+	{% endblock %}
+	
+	{% block contenido %}
+		
+		<h3>
+			<span class="label label-warning">Listado</span> Accesos
+		</h3>
+		
+		<br />
+		
+		<div class="row">
+			<div class="col-md-12">
+			
+				<table class="table table-bordered responsive">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Lectura</th>
+							<th>Escritura</th>
+							<th>Actualizar</th>
+							<th>Eliminar</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if consulta|length >= 1%}
+							
+							{% for acceso in consulta %}
+								<tr>
+									<td>{{ acceso.getNombre|e }}</td>
+									<td>
+										{% if acceso.getLectura == 1 %}
+											<button type="button" class="btn btn-green btn-icon">ACTIVO <i class="entypo-check"></i></button>
+										{% else %}
+											<button type="button" class="btn btn-default btn-icon">INACTIVO <i class="entypo-cancel"></i></button>
+										{% endif %}
+									</td>
+									<td>
+										{% if acceso.getEscritura == 1 %}
+											<button type="button" class="btn btn-green btn-icon">ACTIVO <i class="entypo-check"></i></button>
+										{% else %}
+											<button type="button" class="btn btn-default btn-icon">INACTIVO <i class="entypo-cancel"></i></button>
+										{% endif %}
+									</td>
+									<td>
+										{% if acceso.getActualizar == 1 %}
+											<button type="button" class="btn btn-green btn-icon">ACTIVO <i class="entypo-check"></i></button>
+										{% else %}
+											<button type="button" class="btn btn-default btn-icon">INACTIVO <i class="entypo-cancel"></i></button>
+										{% endif %}
+									</td>
+									<td>
+										{% if acceso.getEliminar == 1 %}
+											<button type="button" class="btn btn-green btn-icon">ACTIVO <i class="entypo-check"></i></button>
+										{% else %}
+											<button type="button" class="btn btn-default btn-icon">INACTIVO <i class="entypo-cancel"></i></button>
+										{% endif %}
+									</td>
+									<td>Acciones</td>
+								</tr>
+							{% endfor %}
+							
+						{% else %}
+							<tr>
+								<td colspan="3">No hay Modulos registrados</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			
+			</div>
+		</div>
+	{% endblock %}

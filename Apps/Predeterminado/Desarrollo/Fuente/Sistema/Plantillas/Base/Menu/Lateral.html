@@ -59,7 +59,7 @@
 				<li>
 					<a href="{{ RUTA_APP|e }}/Usuarios">
 						<i class="entypo-list"></i>
-						<span class="title">Listado</span>
+						<span class="title">Listado Usuarios</span>
 					</a>
 				</li>
 				
@@ -73,6 +73,55 @@
 					</li>
 					
 				{% endif %}
+				
+			</ul>
+		</li>
+		
+	{% endif %}
+	
+{# ----------------------------------------------------------------------- #}
+
+	{#
+		/**
+		 * Modulo Permisos
+		 *
+		 * El modulo en el cual puede listar, agregar
+		 * eliminar y/o actualizar los permisos
+		 * registrados en la aplicacion
+		 */
+	#}
+	
+	{% if sesion.permisos.Permisos.lectura == 1 %}
+		
+		<li>
+			<a href="javascript:;">
+				<i class="entypo-minus-circled"></i>
+				<span class="title">Permisos</span>
+			</a>
+			<ul>
+				{# muestra el listado de permisos registrados en la aplicacion #}
+				<li>
+					<a href="{{ RUTA_APP|e }}/Permisos/Index">
+						<i class="entypo-list"></i>
+						<span class="title">Listado Permisos</span>
+					</a>
+				</li>
+				
+				{# muestra el listado de modulos registrados en la aplicacion #}
+				<li>
+					<a href="{{ RUTA_APP|e }}/Permisos/Index/modulos">
+						<i class="entypo-list"></i>
+						<span class="title">Listado Modulos</span>
+					</a>
+				</li>
+				
+				{# muestra el listado de accesos registrados en la aplicacion #}
+				<li>
+					<a href="{{ RUTA_APP|e }}/Permisos/Index/accesos">
+						<i class="entypo-list"></i>
+						<span class="title">Listado Accesos</span>
+					</a>
+				</li>
 				
 			</ul>
 		</li>

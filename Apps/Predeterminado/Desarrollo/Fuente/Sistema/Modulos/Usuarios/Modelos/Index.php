@@ -34,7 +34,7 @@
 				->getRepository('\Entidades\Expertos\Usuarios')
 				->findBy(
 					array('estado' => array(1, 2)), 
-					array('estado' => 'ASC', 'apellido' => 'DESC', 'empresa' => 'ASC')
+					array('estado' => 'ASC', 'apellido' => 'ASC', 'empresa' => 'ASC')
 				);
 		}
 	}

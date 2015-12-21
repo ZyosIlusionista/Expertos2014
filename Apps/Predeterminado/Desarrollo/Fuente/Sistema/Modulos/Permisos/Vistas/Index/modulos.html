@@ -1,0 +1,52 @@
+	{% extends 'Base.html' %}
+	
+	{% block css %}
+		<style type="text/css">
+			th, td {
+				text-align: center;
+				font-weight: bold;
+			}
+		</style>
+	{% endblock %}
+	
+	{% block contenido %}
+		
+		<h3>
+			<span class="label label-warning">Listado</span> Modulos Activos - Inactivos
+		</h3>
+		
+		<br />
+		
+		<div class="row">
+			<div class="col-md-12">
+			
+				<table class="table table-bordered responsive">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Estado</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if consulta|length >= 1%}
+							
+							{% for modulo in consulta %}
+								<tr>
+									<td>{{ modulo.getNombre|e }}</td>
+									<td>{{ modulo.getEstado.getNombre|e }}</td>
+									<td>Acciones</td>
+								</tr>
+							{% endfor %}
+							
+						{% else %}
+							<tr>
+								<td colspan="3">No hay Modulos registrados</td>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			
+			</div>
+		</div>
+	{% endblock %}

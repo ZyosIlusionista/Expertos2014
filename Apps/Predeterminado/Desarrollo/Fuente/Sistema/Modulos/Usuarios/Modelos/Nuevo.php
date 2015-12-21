@@ -78,12 +78,6 @@
 		 * @return object
 		 */
 		public function guardarUsuario($array = false) {
-			
-			$empresa = $this->entidad->getRepository('\Entidades\Expertos\UsuariosEmpresa')->findOneBy(array('id' => $array['empresa']));
-			$cargo = $this->entidad->getRepository('\Entidades\Expertos\UsuariosCargo')->findOneBy(array('id' => $array['cargo']));
-			$permiso = $this->entidad->getRepository('\Entidades\Expertos\Permisos')->findOneBy(array('id' => $array['permiso']));
-			$estado = $this->entidad->getRepository('\Entidades\Expertos\Estados')->findOneBy(array('id' => 1));
-			
 			$usuario = new Usuarios();
 			$usuario->setUsuario($array['usuario']);
 			$usuario->setPassword($array['password']);
@@ -92,10 +86,10 @@
 			$usuario->setCedula($array['cedula']);
 			$usuario->setUsuarioRr($array['usuarioRr']);
 			$usuario->setCorreo($array['correo']);
-			$usuario->setEmpresa($empresa);
-			$usuario->setCargo($cargo);
-			$usuario->setPermiso($permiso);
-			$usuario->setEstado($estado);
+			$usuario->setEmpresa($this->entidad->getRepository('\Entidades\Expertos\UsuariosEmpresa')->findOneBy(array('id' => $array['empresa'])));
+			$usuario->setCargo($this->entidad->getRepository('\Entidades\Expertos\UsuariosCargo')->findOneBy(array('id' => $array['cargo'])));
+			$usuario->setPermiso($this->entidad->getRepository('\Entidades\Expertos\Permisos')->findOneBy(array('id' => $array['permiso'])));
+			$usuario->setEstado($this->entidad->getRepository('\Entidades\Expertos\Estados')->findOneBy(array('id' => 1)));
 			
 			$this->entidad->persist($usuario);
 			$this->entidad->flush();

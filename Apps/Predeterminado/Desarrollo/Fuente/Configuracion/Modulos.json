@@ -18,6 +18,11 @@
 			"mantenimiento" : false,
 			"descripcion" : "Modulo de administración de usuarios"
 		},
+		"Permisos" : {
+			"habilitado" : true,
+			"mantenimiento" : false,
+			"descripcion" : "Modulo de administracion de permisos"
+		},
 		"Guiones" : {
 			"habilitado" : true,
 			"mantenimiento" : false,
