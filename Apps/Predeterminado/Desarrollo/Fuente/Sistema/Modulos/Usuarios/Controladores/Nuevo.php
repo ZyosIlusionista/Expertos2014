@@ -150,7 +150,7 @@
 			if($this->validarFormulario->validar('\Formularios\Usuarios\Nuevo') == true):
 				$this->procesarGuardar();
 			else:
-				throw new Excepcion(implode("\n", $this->validarFormulario->mensajeError()), 0, APP, 'peticionAjax');
+				throw new Excepcion(implode('\\n ', $this->validarFormulario->mensajeError()), 0, APP, 'peticionAjax');
 			endif;
 		}
 		

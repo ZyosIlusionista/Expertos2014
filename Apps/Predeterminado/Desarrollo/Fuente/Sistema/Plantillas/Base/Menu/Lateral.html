@@ -123,6 +123,18 @@
 					</a>
 				</li>
 				
+				{# muestra el formulario para agregar accesos #}
+				{% if sesion.permisos.Permisos.escritura == 1 %}
+					
+					<li>
+						<a href="{{ RUTA_APP|e }}/Permisos/Nuevo/acceso">
+							<i class="entypo-list-add"></i>
+							<span class="title">Nuevo Acceso</span>
+						</a>
+					</li>
+					
+				{% endif %}
+				
 			</ul>
 		</li>
 		
