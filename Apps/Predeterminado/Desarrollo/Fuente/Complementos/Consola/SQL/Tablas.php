@@ -12,7 +12,7 @@
 		private $guiones, $guiones_asignacion;
 		
 		function __construct() {
-			$conexion = new \Neural\BD\Conexion(APPBD, APP);
+			$conexion = new \Neural\BD\Conexion(APPBD);
 			$this->conexion = $conexion->doctrineDBAL();
 			$this->esquema = new \Doctrine\DBAL\Schema\Schema();
 			$this->plataforma = $this->conexion->getDatabasePlatform();

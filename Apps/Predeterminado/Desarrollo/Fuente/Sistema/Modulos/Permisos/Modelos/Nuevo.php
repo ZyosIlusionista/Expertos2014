@@ -71,4 +71,38 @@
 			$this->entidad->flush();
 			return $modulo->getId();
 		}
+		
+		/**
+		 * Nuevo::existenciaPermiso()
+		 * 
+		 * Genera la validacion de la existencia del permiso
+		 * dentro de la base de datos
+		 * 
+		 * @param array $array
+		 * @return bool
+		 */
+		public function existenciaPermiso($array = false) {
+			$consulta = $this->entidad->getRepository('\Entidades\Expertos\Permisos')->findOneBy($array);
+			return (count($consulta) >= 1) ? true : false;
+		}
+		
+		/**
+		 * Nuevo::consultaPermisos()
+		 *
+		 * Genera la consulta de los modulos activos 
+		 * @return object
+		 */
+		public function consultaModulos() {
+			return $this->entidad->getRepository('\Entidades\Expertos\PermisosModulos')->findBy(array('estado' => 1), array('nombre' => 'ASC'));
+		}
+		
+		/**
+		 * Nuevo::consultaAccesos()
+		 *
+		 * Genera la consulta de los accesos disponibles 
+		 * @return object
+		 */
+		public function consultaAccesos() {
+			return $this->entidad->getRepository('\Entidades\Expertos\PermisosAcceso')->findBy(array(), array('nombre' => 'ASC'));
+		}
 	}

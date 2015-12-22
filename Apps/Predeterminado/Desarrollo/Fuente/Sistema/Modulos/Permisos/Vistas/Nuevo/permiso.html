@@ -2,6 +2,10 @@
 	
 	{% block css %}
 		<style type="text/css">
+			th {
+				font-weight: bold;
+				text-align: center;
+			}
 			.control-label, .panel-title {
 				font-weight: bold;
 			}
@@ -30,9 +34,81 @@
 						<form action="javascript:;" role="form" method="POST" name="formulario" id="formulario" class="form-horizontal form-groups-bordered">
 		
 							<div class="form-group">
-								<label for="field-1" class="col-sm-3 control-label">Nombre del Modulo</label>
+								<label for="field-1" class="col-sm-3 control-label">Nombre del Rol</label>
 								<div class="col-sm-5">
-									<input type="text" name="nombre" class="form-control" placeholder="Nombre del Modulo">
+									<input type="text" name="nombre" class="form-control" placeholder="Nombre del Rol">
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="field-1" class="col-sm-3 control-label">Selección de Modulos</label>
+								<div class="col-sm-5">
+									<table class="table table-bordered table-responsive">
+										<tbody>
+											<tr>
+												<td style="text-align: center; font-weight: bold;">Modulo</td>
+												<td style="text-align: center; font-weight: bold;">
+												
+													<select id="modulo">
+														<option value="">Escoja una opción</option>
+														<optgroup>
+															{% if consultaModulos|length >= 1 %}
+																
+																{% for modulo in consultaModulos %}
+																	<option value="{{ modulo.getId|e }}">{{ modulo.getNombre|e }}</option>
+																{% endfor %}
+																
+															{% else %}
+																<option value="">No hay modulos para Visualizar</option>
+															{% endif %}
+														</optgroup>
+													</select>
+												
+												</td>
+											</tr>
+											<tr>
+												<td style="text-align: center; font-weight: bold;">Acceso</td>
+												<td style="text-align: center; font-weight: bold;">
+													<select id="acceso">
+														<option value="">Escoja una opción</option>
+														<optgroup>
+															{% if consultaAccesos|length >= 1 %}
+																
+																{% for acceso in consultaAccesos %}
+																	<option value="{{ acceso.getId|e }}">{{ acceso.getNombre|title|e }}</option>
+																{% endfor %}
+																
+															{% else %}
+																<option value="">No hay Accesos para Visualizar</option>
+															{% endif %}
+														</optgroup>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2" style="text-align: center; padding-top: 15px;">
+													<button type="button" id="agregar" class="btn btn-blue btn-icon">Agregar <i class="entypo-retweet"></i></button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="field-1" class="col-sm-3 control-label">Modulos Seleccionados</label>
+								<div class="col-sm-7">
+									<table class="table table-bordered table-responsive">
+										<thead>
+											<tr>
+												<th>Modulo</th>
+												<th>Permiso</th>
+											</tr>
+										</thead>
+										<tbody id="tablaInfo">
+											
+										</tbody>
+									</table>
 								</div>
 							</div>
 							

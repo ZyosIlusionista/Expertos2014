@@ -24,7 +24,8 @@
 			$this->sesionPHP = new Sesion();
 			$this->metodos = array(
 				'1268771b' => array('titulo' => 'Acceso', 'metodo' => 'guardarAcceso', 'namespace' => '\Formularios\Permisos\Nuevo\Acceso'),
-				'ecf1cf36' => array('titulo' => 'Modulo', 'metodo' => 'guardarModulo', 'namespace' => '\Formularios\Permisos\Nuevo\Modulo')
+				'ecf1cf36' => array('titulo' => 'Modulo', 'metodo' => 'guardarModulo', 'namespace' => '\Formularios\Permisos\Nuevo\Modulo'),
+				'fd7aab9e' => array('titulo' => 'Modulo', 'metodo' => 'guardarPermiso', 'namespace' => '\Formularios\Permisos\Nuevo\Modulo')
 			);
 		}
 		
@@ -204,9 +205,113 @@
 			$this->procesar('ecf1cf36');
 		}
 		
+		/**
+		 * Nuevo::permiso()
+		 *
+		 * Genera el formulario para agregar un nuevo permiso
+		 * 
+		 * @permiso escritura 
+		 * @return void
+		 */
 		public function permiso() {
 			$this->plantilla->parametroGlobal('sesion', $this->sesionPHP->obtenerInfo());
+			$this->plantilla->parametro('script', $this->permisoJQuery());
+			$this->plantilla->parametro('consultaModulos', $this->modelo->consultaModulos());
+			$this->plantilla->parametro('consultaAccesos', $this->modelo->consultaAccesos());
 			echo $this->plantilla->mostrarPlantilla('Nuevo', 'permiso.html');
+		}
+		
+		/**
+		 * Nuevo::permisoJQuery()
+		 * 
+		 * Genera la validacion del formulario del lado del usuario utilizando
+		 * la libreria validate de JQuery para dicho proposito
+		 * 
+		 * @permiso escritura 
+		 * @return string
+		 */
+		private function permisoJQuery() {
+			$val = new Formulario(APP, false, true);
+			$val->nombre()
+						->_requerido('Ingrese el Nombre del Permiso')
+						->_minCaracteres(5, 'Debe ingresar minimo 5 caracteres')
+						->_maxCaracteres(200, 'No puede contener más de 200 Caracteres')
+						->_remoto($this->ruta->modulo('Permisos', 'Nuevo', 'permisoExistencia'), 'POST', 'El Permiso ya se encuentra registrado');
+			$val->peticionAjax('peticion.init(formulario);');
+			
+			return $val->mostrarValidacion('formulario');
+		}
+		
+		/**
+		 * Nuevo::permisoExistencia()
+		 * 
+		 * Genera la validacion de la existencia del permiso
+		 * @permiso escritura
+		 * @return string
+		 */
+		public function permisoExistencia() {
+			if($this->peticion->ajax() == true):
+				echo ($this->peticion->postExistencia() == true) ? $this->permisoExistenciaProceso() : 'false';
+			else:
+				throw new Excepcion('No es posible procesar su petición', 0, APP);
+			endif;
+		}
+		
+		/**
+		 * Nuevo::permisoExistenciaProceso()
+		 *
+		 * Genera el proceso de validacion base de la 
+		 * existencia del permiso
+		 * 
+		 * @permiso escritura 
+		 * @return string
+		 */
+		private function permisoExistenciaProceso() {
+			if($this->validarFormulario->validar('\Formularios\Permisos\Nuevo\PermisoExistencia') == true):
+				return ($this->modelo->existenciaPermiso($this->validarFormulario->datosFormulario()) == true) ? 'false' : 'true';
+			else:
+				return 'false';
+			endif;
+		}
+		
+		/**
+		 * Nuevo::permisoJs()
+		 * 
+		 * Genera el script correspondiente del transporte
+		 * de la peticion ajax a traves de js
+		 * 
+		 * @permiso escritura 
+		 * @return string
+		 */
+		public function permisoJs() {
+			$this->cabecera->header('js');
+			echo $this->plantilla->mostrarPlantilla('Nuevo', 'permisoJs.js');
+		}
+		
+		/**
+		 * Nuevo::permisoJsAgregar()
+		 *
+		 * Genera la funcionalidad base para agregar los
+		 * modulos al permiso correspondiente
+		 *  
+		 * @return string
+		 */
+		public function permisoJsAgregar() {
+			$this->cabecera->header('js');
+			echo $this->plantilla->mostrarPlantilla('Nuevo', 'permisoJsAgregar.js');
+		}
+		
+		/**
+		 * Nuevo::permisoProcesar()
+		 *
+		 * Genera el proceso de almacenamiento de los
+		 * datos para los permisos
+		 *  
+		 * @permiso escritura
+		 * @return string
+		 */
+		public function permisoProcesar() {
+			//$this->procesar('fd7aab9e');
 		}
 		
 ##############################################################################################################################
