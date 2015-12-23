@@ -9,7 +9,7 @@
 		private $estados;
 		private $usuarios_empresa, $usuarios_cargo, $usuarios;
 		private $permisos, $permisos_modulo, $permisos_acceso, $permisos_seleccion;
-		private $guiones, $guiones_asignacion;
+		private $guiones, $guiones_asignacion, $guiones_registro_tipo, $guiones_registro, $guiones_registro_afectacion, $guiones_registro_ubicacion;
 		
 		function __construct() {
 			$conexion = new \Neural\BD\Conexion(APPBD);
@@ -34,6 +34,10 @@
 			#---------------------------------------
 			$this->tbl_guiones();
 			$this->tbl_guiones_asignacion();
+			$this->tbl_guiones_registro_tipo_formulario();
+			$this->tbl_guiones_registro_afectacion();
+			$this->tbl_guiones_registro_ubicacion();
+			$this->tbl_guiones_registro();
 			#---------------------------------------
 			
 			
@@ -78,6 +82,20 @@
 			$this->conexion->insert('USUARIOS_EMPRESA', array('ID' => 1, 'NOMBRE' => 'CLARO', 'ESTADO' => 1));
 			$this->conexion->insert('USUARIOS_CARGO', array('ID' => 1, 'NOMBRE' => 'ADMINISTRADOR DEL SISTEMA'));
 			$this->conexion->insert('USUARIOS', array('ID' => 1, 'USUARIO' => 'ADMIN', 'PASSWORD' => sha1('123'), 'NOMBRE' => 'ADMINISTRADOR', 'APELLIDO' => 'DEL SISTEMA', 'CEDULA' => 1234567890, 'USUARIO_RR' => 'ADMINRR', 'CORREO' => 'ADMIN@ADMIN.COM', 'ESTADO' => 1, 'EMPRESA' => 1, 'CARGO' => 1, 'PERMISO' => 1));
+			
+			$this->conexion->insert('GUIONES_REGISTRO_TIPO', array('ID' => 1, 'NOMBRE' => 'HFC', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_TIPO', array('ID' => 2, 'NOMBRE' => 'MATRIZ', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_TIPO', array('ID' => 3, 'NOMBRE' => 'PLATAFORMA', 'ESTADO' => 1));
+			
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 1, 'NOMBRE' => 'SIN SEÑAL', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 2, 'NOMBRE' => 'SEÑAL DEFICIENTE', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 3, 'NOMBRE' => 'SEÑAL PIXELADA', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 4, 'NOMBRE' => 'SEÑAL PIXELADA PLATAFORMA', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 5, 'NOMBRE' => 'SIN NIVELES', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 6, 'NOMBRE' => 'DESFASE RUIDO', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 7, 'NOMBRE' => 'DESFASE POTENCIA', 'ESTADO' => 1));
+			$this->conexion->insert('GUIONES_REGISTRO_AFECTACION', array('ID' => 8, 'NOMBRE' => 'DESFASE NIVELES', 'ESTADO' => 1));
+			
 			
 		}
 		
@@ -453,7 +471,153 @@
 			$this->guiones_asignacion->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
 		}
 		
+		/**
+		 * Tablas::tbl_guiones_tipo_formulario()
+		 * 
+		 * Genera el listado de tipos de guion los cuales seran utilizados
+		 * para generar los distintos tipos de estadisticas
+		 * 
+		 * @foreign ESTADOS
+		 * @return void
+		 */
+		private function tbl_guiones_registro_tipo_formulario() {
+			$this->guiones_registro_tipo = $this->esquema->createTable('GUIONES_REGISTRO_TIPO');
+			$this->guiones_registro_tipo->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID del tipo de guion'
+			));
+			$this->guiones_registro_tipo->addColumn('NOMBRE', 'string', array(
+				'notnull' => true, 
+				'length' => 255,
+				'comment' => 'Nombre del tipo de guion'
+			));
+			$this->guiones_registro_tipo->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Estado del tipo de Guion [ID de la tabla ESTADOS]'
+			));
+			$this->guiones_registro_tipo->setPrimaryKey(array('ID'));
+			$this->guiones_registro_tipo->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_registro_afectacion()
+		 * 
+		 * Genera la tabla correspondiente a las afectaciones que
+		 * pueden tener los guiones registros
+		 * 
+		 * @foreign ESTADOS
+		 * @return void
+		 */
+		private function tbl_guiones_registro_afectacion() {
+			$this->guiones_registro_afectacion = $this->esquema->createTable('GUIONES_REGISTRO_AFECTACION');
+			$this->guiones_registro_afectacion->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID de la afectacion'
+			));
+			$this->guiones_registro_afectacion->addColumn('NOMBRE', 'string', array(
+				'notnull' => true, 
+				'length' => 255,
+				'comment' => 'Nombre de la afectacion'
+			));
+			$this->guiones_registro_afectacion->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Estado de la afectacion [ID de la tabla ESTADOS]'
+			));
+			$this->guiones_registro_afectacion->setPrimaryKey(array('ID'));
+			$this->guiones_registro_afectacion->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_registro_ubicacion()
+		 * 
+		 * Genera la tabla donde se establece la ubicacion del
+		 * problema en este caso si es sector, nodo, regional, ciudad
+		 * 
+		 * @foreign ESTADOS
+		 * @return void
+		 */
+		private function tbl_guiones_registro_ubicacion() {
+			$this->guiones_registro_ubicacion = $this->esquema->createTable('GUIONES_REGISTRO_UBICACION');
+			$this->guiones_registro_ubicacion->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID de la ubicacion'
+			));
+			$this->guiones_registro_ubicacion->addColumn('NOMBRE', 'string', array(
+				'notnull' => true, 
+				'length' => 255,
+				'comment' => 'Nombre de la ubicacion'
+			));
+			$this->guiones_registro_ubicacion->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Estado de la ubicacion [ID de la tabla ESTADOS]'
+			));
+			$this->guiones_registro_ubicacion->setPrimaryKey(array('ID'));
+			$this->guiones_registro_ubicacion->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_registro()
+		 *
+		 * tabla de registro de guiones ingresados a la base
+		 * de datos
+		 * 
+		 * @foreign USUARIOS
+		 * @foreign GUIONES_REGISTRO_TIPO
+		 * @foreign GUIONES_REGISTRO_AFECTACION
+		 * @foreign GUIONES_REGISTRO_UBICACION
+		 * @return void
+		 */
 		private function tbl_guiones_registro() {
-			
+			$this->guiones_registro = $this->esquema->createTable('GUIONES_REGISTRO');
+			$this->guiones_registro->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID del registro del guion'
+			));
+			$this->guiones_registro->addColumn('FECHA', 'datetime', array(
+				'notnull' => false,
+				'comment' => 'Fecha de ingreso del registro'
+			));
+			$this->guiones_registro->addColumn('USUARIO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del usuario del registro [ID de la tabla USUARIOS]'
+			));
+			$this->guiones_registro->addColumn('TIPO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del tipo de registro [ID de la tabla GUIONES_REGISTRO_TIPO]'
+			));
+			$this->guiones_registro->addColumn('AFECTACION', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID de la afectacion del registro [ID de la tabla GUIONES_REGISTRO_AFECTACION]'
+			));
+			$this->guiones_registro->addColumn('AVISO', 'bigint', array(
+				'notnull' => false,
+				'default' => 0,
+				'length' => 20,
+				'comment' => 'Numero del aviso del registro'
+			));
+			$this->guiones_registro->addColumn('UBICACION', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID de la UBICACION del registro [ID de la tabla GUIONES_REGISTRO_UBICACION]'
+			));
+			$this->guiones_registro->setPrimaryKey(array('ID'));
+			$this->guiones_registro->addForeignKeyConstraint($this->usuarios, array('USUARIO'), array('ID'), $this->opcForeign);
+			$this->guiones_registro->addForeignKeyConstraint($this->guiones_registro_tipo, array('TIPO'), array('ID'), $this->opcForeign);
+			$this->guiones_registro->addForeignKeyConstraint($this->guiones_registro_afectacion, array('AFECTACION'), array('ID'), $this->opcForeign);
+			$this->guiones_registro->addForeignKeyConstraint($this->guiones_registro_ubicacion, array('UBICACION'), array('ID'), $this->opcForeign);
 		}
 	}
