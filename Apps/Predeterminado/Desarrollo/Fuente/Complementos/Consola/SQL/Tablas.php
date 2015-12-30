@@ -9,7 +9,9 @@
 		private $estados;
 		private $usuarios_empresa, $usuarios_cargo, $usuarios;
 		private $permisos, $permisos_modulo, $permisos_acceso, $permisos_seleccion;
-		private $guiones, $guiones_asignacion, $guiones_registro_tipo, $guiones_registro, $guiones_registro_afectacion, $guiones_registro_ubicacion;
+		private $guiones, $guiones_asignacion, $guiones_registro_tipo, $guiones_registro, 
+				$guiones_registro_afectacion, $guiones_registro_ubicacion, $guiones_registro_hfc, 
+				$guiones_registro_nodos, $guiones_prioridades;
 		
 		function __construct() {
 			$conexion = new \Neural\BD\Conexion(APPBD);
@@ -38,6 +40,9 @@
 			$this->tbl_guiones_registro_afectacion();
 			$this->tbl_guiones_registro_ubicacion();
 			$this->tbl_guiones_registro();
+			$this->tbl_guiones_prioridades();
+			$this->tbl_guiones_registro_hfc();
+			$this->tbl_guiones_registro_nodos();
 			#---------------------------------------
 			
 			
@@ -619,5 +624,110 @@
 			$this->guiones_registro->addForeignKeyConstraint($this->guiones_registro_tipo, array('TIPO'), array('ID'), $this->opcForeign);
 			$this->guiones_registro->addForeignKeyConstraint($this->guiones_registro_afectacion, array('AFECTACION'), array('ID'), $this->opcForeign);
 			$this->guiones_registro->addForeignKeyConstraint($this->guiones_registro_ubicacion, array('UBICACION'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_prioridades()
+		 * 
+		 * Listado de prioridades de los guiones
+		 * 
+		 * @foreign ESTADOS
+		 * @return void
+		 */
+		private function tbl_guiones_prioridades() {
+			$this->guiones_prioridades = $this->esquema->createTable('GUIONES_PRIORIDADES');
+			$this->guiones_prioridades->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID de la prioridad del guion'
+			));
+			$this->guiones_prioridades->addColumn('NOMBRE', 'string', array(
+				'notnull' => true, 
+				'length' => 255,
+				'comment' => 'Nombre de la prioridad'
+			));
+			$this->guiones_prioridades->addColumn('ESTADO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Estado de la prioridad [ID de la tabla ESTADOS]'
+			));
+			$this->guiones_prioridades->setPrimaryKey(array('ID'));
+			$this->guiones_prioridades->addForeignKeyConstraint($this->estados, array('ESTADO'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_registro_hfc()
+		 *
+		 * Genera la tabla correspondiente a todos los registros hfc
+		 * 
+		 * @foreign GUIONES_REGISTRO
+		 * @foreign GUIONES
+		 * @foreign GUIONES_REGISTRO_NODOS
+		 * @return void
+		 */
+		private function tbl_guiones_registro_hfc() {
+			$this->guiones_registro_hfc = $this->esquema->createTable('GUIONES_REGISTRO_HFC');
+			$this->guiones_registro_hfc->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID del registro del guion HFC'
+			));
+			$this->guiones_registro_hfc->addColumn('REGISTRO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del registro [ID de la tabla GUIONES_REGISTRO]'
+			));
+			$this->guiones_registro_hfc->addColumn('INTERMITENCIA', 'boolean', array(
+				'notnull' => true,
+				'default ' => '0', 
+				'comment' => 'Determina la intermitencia del servicio, 0 => NO, 1 => SI'
+			));
+			$this->guiones_registro_hfc->addColumn('GUION', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del Guion [ID de la tabla GUIONES]'
+			));
+			$this->guiones_registro_hfc->addColumn('PRIORIDAD', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID de la prioridad del Guion [ID de la tabla GUIONES_REGISTRO_NODOS]'
+			));
+			$this->guiones_registro_hfc->setPrimaryKey(array('ID'));
+			$this->guiones_registro_hfc->addForeignKeyConstraint($this->guiones_registro, array('REGISTRO'), array('ID'), $this->opcForeign);
+			$this->guiones_registro_hfc->addForeignKeyConstraint($this->guiones, array('GUION'), array('ID'), $this->opcForeign);
+			$this->guiones_registro_hfc->addForeignKeyConstraint($this->guiones_prioridades, array('PRIORIDAD'), array('ID'), $this->opcForeign);
+		}
+		
+		/**
+		 * Tablas::tbl_guiones_registro_nodos()
+		 * 
+		 * Tabla de registro del nodo reportado
+		 * 
+		 * @foreign GUIONES_REGISTRO
+		 * @return void
+		 */
+		private function tbl_guiones_registro_nodos() {
+			$this->guiones_registro_nodos = $this->esquema->createTable('GUIONES_REGISTRO_NODOS');
+			$this->guiones_registro_nodos->addColumn('ID', 'bigint', array(
+				'notnull' => true,
+				'autoincrement' => true, 
+				'length' => 20,
+				'comment' => 'ID del Nodo en el registro'
+			));
+			$this->guiones_registro_nodos->addColumn('REGISTRO', 'bigint', array(
+				'notnull' => true, 
+				'length' => 20,
+				'comment' => 'ID del registro [ID de la tabla GUIONES_REGISTRO]'
+			));
+			$this->guiones_registro_nodos->addColumn('CANTIDAD', 'integer', array(
+				'notnull' => true, 
+				'default' => '0',
+				'length' => 10,
+				'comment' => 'Cantidad de Nodos ingresados'
+			));
+			$this->guiones_registro_nodos->setPrimaryKey(array('ID'));
+			$this->guiones_registro_nodos->addForeignKeyConstraint($this->guiones_registro, array('REGISTRO'), array('ID'), $this->opcForeign);
 		}
 	}
